@@ -5,9 +5,11 @@ namespace backend\controllers;
 use Yii;
 use common\models\Gallery;
 use common\models\GallerySearch;
+use common\models\GalleryMediaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * GalleryController implements the CRUD actions for Gallery model.
@@ -20,6 +22,15 @@ class GalleryController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -52,8 +63,16 @@ class GalleryController extends Controller
      */
     public function actionView($id)
     {
+		$model = $this->findModel($id);
+		
+        $searchModel = new GalleryMediaSearch();
+		$searchModel->gallery_id = $model->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

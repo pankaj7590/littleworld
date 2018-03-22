@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "setting".
@@ -30,6 +32,19 @@ class Setting extends \yii\db\ActiveRecord
     {
         return 'setting';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
 
     /**
      * @inheritdoc

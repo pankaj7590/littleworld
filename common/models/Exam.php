@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "exam".
@@ -26,6 +28,30 @@ use Yii;
  */
 class Exam extends \yii\db\ActiveRecord
 {
+	const STATUS_SCHEDULED = 1;
+	const STATUS_ON_GOING = 2;
+	const STATUS_CANCELLED = 3;
+	const STATUS_OVER = 4;
+	
+	public static $statuses = [
+		self::STATUS_SCHEDULED => 'Scheduled',
+		self::STATUS_ON_GOING => 'On Going',
+		self::STATUS_CANCELLED => 'Cancelled',
+		self::STATUS_OVER => 'Over',
+	];
+	
+	const TYPE_CLASS_TEST = 1;
+	const TYPE_UNIT_TEST = 2;
+	const TYPE_SEMESTER_TEST = 3;
+	const TYPE_ANNUAL_TEST = 4;
+	
+	public static $types = [
+		self::TYPE_CLASS_TEST => 'Class Test',
+		self::TYPE_UNIT_TEST => 'Unit Test',
+		self::TYPE_SEMESTER_TEST => 'Semester Test',
+		self::TYPE_ANNUAL_TEST => 'Annual Test',
+	];
+	
     /**
      * @inheritdoc
      */
@@ -33,6 +59,19 @@ class Exam extends \yii\db\ActiveRecord
     {
         return 'exam';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
 
     /**
      * @inheritdoc

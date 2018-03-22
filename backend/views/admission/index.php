@@ -11,12 +11,8 @@ $this->title = 'Admissions';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="admission-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Admission', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Admission', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,16 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'student_id',
             'year',
             'fee',
             'is_paid',
-            //'status',
-            //'created_by',
-            //'updated_by',
-            //'created_at',
-            //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

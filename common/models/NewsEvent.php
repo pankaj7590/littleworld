@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use yii\web\UploadedFile;
+use common\components\MediaUploader;
 
 /**
  * This is the model class for table "news_event".
@@ -26,6 +30,16 @@ use Yii;
  */
 class NewsEvent extends \yii\db\ActiveRecord
 {
+	public $photoPictureFile;
+	
+	const TYPE_NEWS = 1;
+	const TYPE_EVENT = 2;
+	
+	public static $types = [
+		self::TYPE_NEWS => 'News',
+		self::TYPE_EVENT => 'Events',
+	];
+	
     /**
      * @inheritdoc
      */
@@ -37,10 +51,24 @@ class NewsEvent extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
             [['title', 'content'], 'required'],
+            [['photoPictureFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png'],
             [['content', 'place'], 'string'],
             [['photo', 'news_event_date', 'type', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 255],
@@ -48,6 +76,26 @@ class NewsEvent extends \yii\db\ActiveRecord
             [['photo'], 'exist', 'skipOnError' => true, 'targetClass' => Media::className(), 'targetAttribute' => ['photo' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
         ];
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+			$image = UploadedFile::getInstance($this, 'photoPictureFile');
+			if($image){
+				if($image != null && !$image->getHasError()) {
+					if($mediaDetails = MediaUploader::uploadFiles($image)){
+						$this->photo = $mediaDetails['media_id'];
+					}
+				}
+			}
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -60,6 +108,7 @@ class NewsEvent extends \yii\db\ActiveRecord
             'title' => 'Title',
             'content' => 'Content',
             'photo' => 'Photo',
+            'photoPictureFile' => 'Photo',
             'news_event_date' => 'News Event Date',
             'type' => 'Type',
             'place' => 'Place',
@@ -82,16 +131,16 @@ class NewsEvent extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPhoto0()
-    {
-        return $this->hasOne(Media::className(), ['id' => 'photo']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
+	
+   /**
+    * @return \yii\db\ActiveQuery
+    */
+   public function getPhotoPicture()
+   {
+       return $this->hasOne(Media::className(), ['id' => 'photo']);
+   }
 }

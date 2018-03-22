@@ -4,6 +4,8 @@ namespace common\models;
 
 use Yii;
 use yii\web\IdentityInterface;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "guardian".
@@ -45,6 +47,19 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return 'guardian';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
 
     /**
      * @inheritdoc

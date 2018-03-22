@@ -2,18 +2,16 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->title = ($model->name?$model->name:$model->username);
+$this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -28,20 +26,39 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'profile_picture',
+			[
+				'attribute' => 'profile_picture',
+				'filter' => false,
+				'value' => function($data){
+					$fileName = ($data->profilePicture?$data->profilePicture->file_name:"");
+					return \common\components\MediaHelper::getImageUrl($fileName);
+				},
+				'format' => ['image', ['width' => '100']],
+			],
             'name',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
             'email:email',
             'phone',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+			/* [
+				'attribute' => 'status',
+				'value' => function($data){
+					return (User::$statuses[$data->status]);
+				},
+			], */
+            [
+				'attribute' => 'created_by',
+				'value' => function($data){
+					return ($data->createdBy?$data->createdBy->name:NULL);
+				},
+			],
+            [
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:NULL);
+				},
+			],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

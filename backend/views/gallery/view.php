@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Gallery;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Gallery */
@@ -11,8 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Galleries', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="gallery-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,16 +27,34 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'name',
             'description:ntext',
-            'type',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            // 'type',
+			[
+				'attribute' => 'status',
+				'value' => function($data){
+					return ($data->status?Gallery::$statuses[$data->status]:NULL);
+				},
+			],
+            [
+				'attribute' => 'created_by',
+				'value' => function($data){
+					return ($data->createdBy?$data->createdBy->name:NULL);
+				},
+			],
+            [
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:NULL);
+				},
+			],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 
 </div>
+<?= $this->render('_gallerymedia', [
+	'searchModel' => $searchModel,
+	'dataProvider' => $dataProvider,
+]);?>

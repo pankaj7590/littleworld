@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "gallery_media".
@@ -34,6 +36,19 @@ class GalleryMedia extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -53,8 +68,8 @@ class GalleryMedia extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'gallery_id' => 'Gallery ID',
-            'media_id' => 'Media ID',
+            'gallery_id' => 'Gallery',
+            'media_id' => 'Media',
             'status' => 'Status',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',

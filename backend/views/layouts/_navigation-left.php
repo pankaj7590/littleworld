@@ -12,6 +12,8 @@
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use common\models\Contact;
+use common\models\NewsEvent;
 
 use p2m\widgets\MetisNav;
 use p2m\helpers\FA;
@@ -130,8 +132,10 @@ $arrowIcon = FA::i('arrow')->tag('span');
 					'encodeLabels' => false,
 					'options' => ['class' => 'nav nav-second-level'],
 					'items' => [
-						['label' => 'New News/Event', 'url' => ['/news-event/create']],
-						['label' => 'Manage News & Events', 'url' => ['/news-event/index']],
+						['label' => 'New News', 'url' => ['/news-event/create']],
+						['label' => 'Manage News', 'url' => ['/news-event/index']],
+						['label' => 'New Event', 'url' => ['/news-event/event-create']],
+						['label' => 'Manage Events', 'url' => ['/news-event/event-index']],
 					],
 				]) ?>
 			</li>
@@ -157,12 +161,14 @@ $arrowIcon = FA::i('arrow')->tag('span');
 				]) ?>
 			</li>
 			<li>
-				<a href="#"><?= FA::fw('envelope-square') ?> Contacts<?= $arrowIcon ?></a>
+				<a href="#"><?= FA::fw('envelope-square') ?> Communications<?= $arrowIcon ?></a>
 				<?= MetisNav::widget([
 					'encodeLabels' => false,
 					'options' => ['class' => 'nav nav-second-level'],
 					'items' => [
 						['label' => 'Manage Contacts', 'url' => ['/contact/index']],
+						['label' => 'Manage Feedbacks', 'url' => ['/contact/feedback']],
+						['label' => 'Manage Inquiries', 'url' => ['/contact/inquiry']],
 					],
 				]) ?>
 			</li>

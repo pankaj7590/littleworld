@@ -1,18 +1,29 @@
 <?php
 
 use yii\helpers\Html;
-
+use common\models\NewsEvent;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\NewsEvent */
 
-$this->title = 'Create News Event';
-$this->params['breadcrumbs'][] = ['label' => 'News Events', 'url' => ['index']];
+switch($model->type){
+	case NewsEvent::TYPE_EVENT:
+		$type = 'Event';
+		$label = 'Events';
+		$url = ['event-index'];
+		break;
+	default:
+		$type = 'News';
+		$label = 'News';
+		$url = ['index'];
+		break;
+}
+
+$this->title = 'Add '.$type;
+$this->params['breadcrumbs'][] = ['label' => $label, 'url' => $url];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-event-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -2,18 +2,28 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\NewsEvent;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\NewsEvent */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'News Events', 'url' => ['index']];
+switch($model->type){
+	case NewsEvent::TYPE_EVENT:
+		$type = 'Event';
+		$label = 'Events';
+		$url = ['event-index'];
+		break;
+	default:
+		$type = 'News';
+		$label = 'News';
+		$url = ['index'];
+		break;
+}
+$this->params['breadcrumbs'][] = ['label' => $label, 'url' => $url];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-event-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -28,18 +38,34 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+			[
+				'attribute' => 'photoPictureFile',
+				'filter' => false,
+				'value' => function($data){
+					$fileName = ($data->photoPicture?$data->photoPicture->file_name:"");
+					return \common\components\MediaHelper::getImageUrl($fileName);
+				},
+				'format' => ['image', ['width' => '100']],
+			],
             'title',
             'content:ntext',
-            'photo',
             'news_event_date',
-            'type',
             'place:ntext',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            // 'status',
+            [
+				'attribute' => 'created_by',
+				'value' => function($data){
+					return ($data->createdBy?$data->createdBy->name:NULL);
+				},
+			],
+            [
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:NULL);
+				},
+			],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

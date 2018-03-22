@@ -2,17 +2,25 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Fee;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Fee */
-
-$this->title = $model->id;
+$title = '';
+if($model->year){
+	$title .= $model->year.'-';
+}
+if($model->type){
+	$title .= Fee::$types[$model->type].'-';
+}
+if($model->year){
+	$title .= $model->amount;
+}
+$this->title = trim($title,'-');
 $this->params['breadcrumbs'][] = ['label' => 'Fees', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="fee-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,15 +36,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'year',
-            'type',
+            [
+				'attribute' => 'type',
+				'value' => function($data){
+					return ($data->type?Fee::$types[$data->type]:NULL);
+				},
+			],
             'amount',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            [
+				'attribute' => 'created_by',
+				'value' => function($data){
+					return ($data->createdBy?$data->createdBy->name:NULL);
+				},
+			],
+            [
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:NULL);
+				},
+			],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

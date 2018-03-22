@@ -12,11 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="payment-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Payment', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Payment', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,18 +22,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'guardian_id',
-            'student_id',
-            'fee_id',
+			[
+				'attribute' => 'guardian_id',
+				'value' => function($data){
+					return ($data->guardian?$data->guardian->name:NULL);
+				},
+			],
+			[
+				'attribute' => 'student_id',
+				'value' => function($data){
+					return ($data->student?$data->student->name:NULL);
+				},
+			],
+			[
+				'attribute' => 'fee_id',
+				'value' => function($data){
+					return ($data->fee?$data->fee->amount:NULL);
+				},
+			],
             'email:email',
-            //'mobile',
-            //'amount',
-            //'status',
-            //'created_by',
-            //'updated_by',
-            //'created_at',
-            //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

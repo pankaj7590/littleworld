@@ -8,6 +8,7 @@ use common\models\NewsEventSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * NewsEventController implements the CRUD actions for NewsEvent model.
@@ -20,6 +21,15 @@ class NewsEventController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -36,6 +46,23 @@ class NewsEventController extends Controller
     public function actionIndex()
     {
         $searchModel = new NewsEventSearch();
+		$searchModel->type = NewsEvent::TYPE_NEWS;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all NewsEvent models.
+     * @return mixed
+     */
+    public function actionEventIndex()
+    {
+        $searchModel = new NewsEventSearch();
+		$searchModel->type = NewsEvent::TYPE_EVENT;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -65,6 +92,26 @@ class NewsEventController extends Controller
     public function actionCreate()
     {
         $model = new NewsEvent();
+		$model->type = NewsEvent::TYPE_NEWS;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Creates a new NewsEvent model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionEventCreate()
+    {
+        $model = new NewsEvent();
+		$model->type = NewsEvent::TYPE_EVENT;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

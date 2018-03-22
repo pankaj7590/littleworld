@@ -12,27 +12,20 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+	<?php if($model->photoPicture){?>
+		<div class="controls">
+			<img src="<?= \common\components\MediaHelper::getImageUrl($model->photoPicture->file_name)?>" width="200px"/>
+		</div>
+	<?php }?>
+	<?= $form->field($model, 'photoPictureFile')->fileInput() ?>
+					
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'photo')->textInput() ?>
-
     <?= $form->field($model, 'news_event_date')->textInput() ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
-
-    <?= $form->field($model, 'place')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'place')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

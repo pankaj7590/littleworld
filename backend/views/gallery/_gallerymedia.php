@@ -4,17 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\StudentSearch */
+/* @var $searchModel common\models\GalleryMediaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Students';
+$this->title = 'Gallery Media';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="student-index">
-
-    <p>
-        <?= Html::a('Add Student', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<div class="gallery-media-index">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -23,19 +19,27 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
 			[
-				'attribute' => 'photo',
+				'attribute' => 'media_id',
 				'filter' => false,
 				'value' => function($data){
-					$fileName = ($data->photoPicture?$data->photoPicture->file_name:"");
+					$fileName = ($data->media?$data->media->file_name:"");
 					return \common\components\MediaHelper::getImageUrl($fileName);
 				},
 				'format' => ['image', ['width' => '100']],
 			],
-            'name',
-            'address:ntext',
-            'dob:date',
+            [
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:NULL);
+				},
+			],
+            'updated_at:datetime',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				'buttons' => [
+				],
+			],
         ],
     ]); ?>
 </div>

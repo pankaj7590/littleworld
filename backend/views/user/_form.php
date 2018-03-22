@@ -9,15 +9,21 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="user-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+			<?php $form = ActiveForm::begin(); ?>
+					<?php if($model->profilePicture){?>
+						<div class="controls">
+							<img src="<?= \common\components\MediaHelper::getImageUrl($model->profilePicture->file_name)?>"/>
+						</div>
+					<?php }?>
+					<?= $form->field($model, 'profilePictureFile')->fileInput() ?>
+					<?= $form->field($model, 'name')->textInput() ?>
+					<?= $form->field($model, 'username')->textInput() ?>
+					<?= $form->field($model, 'password')->passwordInput() ?>
+					<?= $form->field($model, 'email')->textInput() ?>
+					<?= $form->field($model, 'phone')->textInput() ?>
+					<div class="form-group">
+						<?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+					</div> <!-- /form-actions -->
+			<?php ActiveForm::end(); ?>
 
 </div>

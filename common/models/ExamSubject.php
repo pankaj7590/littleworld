@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "exam_subject".
@@ -36,6 +38,19 @@ class ExamSubject extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -55,8 +70,8 @@ class ExamSubject extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'exam_id' => 'Exam ID',
-            'subject_id' => 'Subject ID',
+            'exam_id' => 'Exam',
+            'subject_id' => 'Subject',
             'marks' => 'Marks',
             'status' => 'Status',
             'created_by' => 'Created By',

@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "payment".
@@ -28,6 +30,16 @@ use Yii;
  */
 class Payment extends \yii\db\ActiveRecord
 {
+	const STATUS_PENDING = 1;
+	const STATUS_DONE = 2;
+	const STATUS_CANCELLED = 3;
+	
+	public static $statuses = [
+		self::STATUS_PENDING => 'Pending',
+		self::STATUS_DONE => 'Done',
+		self::STATUS_CANCELLED => 'Cancelled',
+	];
+	
     /**
      * @inheritdoc
      */
@@ -35,6 +47,19 @@ class Payment extends \yii\db\ActiveRecord
     {
         return 'payment';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
 
     /**
      * @inheritdoc
@@ -61,9 +86,9 @@ class Payment extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'guardian_id' => 'Guardian ID',
-            'student_id' => 'Student ID',
-            'fee_id' => 'Fee ID',
+            'guardian_id' => 'Guardian',
+            'student_id' => 'Student',
+            'fee_id' => 'Fee',
             'email' => 'Email',
             'mobile' => 'Mobile',
             'amount' => 'Amount',

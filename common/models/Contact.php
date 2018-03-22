@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "contact".
@@ -19,6 +20,16 @@ use Yii;
  */
 class Contact extends \yii\db\ActiveRecord
 {
+	const TYPE_CONTACT = 1;
+	const TYPE_FEEDBACK = 2;
+	const TYPE_INQUIRY = 3;
+	
+	public static $types = [
+		self::TYPE_CONTACT => 'Contact',
+		self::TYPE_FEEDBACK => 'Feedback',
+		self::TYPE_INQUIRY => 'Inquiry',
+	];
+	
     /**
      * @inheritdoc
      */
@@ -26,6 +37,16 @@ class Contact extends \yii\db\ActiveRecord
     {
         return 'contact';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+		];
+	}
 
     /**
      * @inheritdoc
@@ -50,7 +71,7 @@ class Contact extends \yii\db\ActiveRecord
             'name' => 'Name',
             'surname' => 'Surname',
             'email' => 'Email',
-            'feedback_type' => 'Feedback Type',
+            'feedback_type' => 'Type',
             'message' => 'Message',
             'status' => 'Status',
             'created_at' => 'Created At',

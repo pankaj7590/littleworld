@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\Exam;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ExamSearch */
@@ -11,12 +12,8 @@ $this->title = 'Exams';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="exam-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Exam', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Exam', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,16 +22,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'name',
             'year',
-            'type',
-            'scheduled_date',
-            //'status',
-            //'created_by',
-            //'updated_by',
-            //'created_at',
-            //'updated_at',
+			[
+				'attribute' => 'type',
+				'value' => function($data){
+					return ($data->type?Exam::$types[$data->type]:NULL);
+				},
+			],
+            'scheduled_date:datetime',
+			[
+				'attribute' => 'status',
+				'value' => function($data){
+					return ($data->status?Exam::$statuses[$data->status]:NULL);
+				},
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

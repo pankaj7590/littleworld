@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="admission-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -28,16 +26,34 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'student_id',
+            [
+				'attribute' => 'student_id',
+				'value' => function($data){
+					return ($data->student?$data->student->name:NULL);
+				},
+			],
             'year',
             'fee',
-            'is_paid',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            [
+				'attribute' => 'is_paid',
+				'value' => function($data){
+					return ($data->is_paid?'Yes':'No');
+				},
+			],
+            [
+				'attribute' => 'created_by',
+				'value' => function($data){
+					return ($data->createdBy?$data->createdBy->name:NULL);
+				},
+			],
+            [
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:NULL);
+				},
+			],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

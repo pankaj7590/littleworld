@@ -11,12 +11,8 @@ $this->title = 'Subjects';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="subject-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Subject', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Subject', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,13 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'name',
-            'status',
-            'created_by',
-            'updated_by',
-            //'created_at',
-            //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

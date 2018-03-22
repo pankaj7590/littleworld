@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use yii\web\UploadedFile;
+use common\components\MediaUploader;
 
 /**
  * This is the model class for table "student".
@@ -30,6 +34,8 @@ use Yii;
  */
 class Student extends \yii\db\ActiveRecord
 {
+	public $photoPictureFile;
+	
     /**
      * @inheritdoc
      */
@@ -41,16 +47,50 @@ class Student extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
             [['name', 'address'], 'required'],
+            [['photoPictureFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png'],
             [['address'], 'string'],
             [['dob', 'photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
         ];
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+			$image = UploadedFile::getInstance($this, 'photoPictureFile');
+			if($image){
+				if($image != null && !$image->getHasError()) {
+					if($mediaDetails = MediaUploader::uploadFiles($image)){
+						$this->photo = $mediaDetails['media_id'];
+					}
+				}
+			}
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -62,13 +102,14 @@ class Student extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'address' => 'Address',
-            'dob' => 'Dob',
+            'dob' => 'Date Of Birth',
             'photo' => 'Photo',
             'status' => 'Status',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'photoPictureFile' => 'Profile Picture',
         ];
     }
 
@@ -143,4 +184,12 @@ class Student extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StudentGuardian::className(), ['student_id' => 'id']);
     }
+	
+   /**
+    * @return \yii\db\ActiveQuery
+    */
+   public function getPhotoPicture()
+   {
+       return $this->hasOne(Media::className(), ['id' => 'photo']);
+   }
 }

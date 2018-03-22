@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "fee".
@@ -24,6 +26,14 @@ use Yii;
  */
 class Fee extends \yii\db\ActiveRecord
 {
+	const TYPE_MONTHLY = 1;
+	const TYPE_YEARLY = 2;
+	
+	public static $types = [
+		self::TYPE_MONTHLY => 'Monthly',
+		self::TYPE_YEARLY => 'Yearly',
+	];
+	
     /**
      * @inheritdoc
      */
@@ -31,6 +41,19 @@ class Fee extends \yii\db\ActiveRecord
     {
         return 'fee';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+			'blameable' => [
+				'class' => BlameableBehavior::className(),
+			],
+		];
+	}
 
     /**
      * @inheritdoc

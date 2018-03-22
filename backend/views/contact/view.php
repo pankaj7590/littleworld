@@ -2,17 +2,30 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Contact;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Contact */
 
+switch($model->feedback_type){
+	case Contact::TYPE_FEEDBACK:
+		$types = 'Feedbacks';
+		$url = ['feedback'];
+		break;
+	case Contact::TYPE_INQUIRY:
+		$types = 'Inquiries';
+		$url = ['inquiry'];
+		break;
+	default:
+		$types = 'Contacts';
+		$url = ['index'];
+		break;
+}
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Contacts', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $types, 'url' => $url];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="contact-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,15 +41,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'name',
             'surname',
             'email:email',
-            'feedback_type',
+            [
+				'attribute' => 'feedback_type',
+				'value' => function($data){
+					return ($data->feedback_type?Contact::$types[$data->feedback_type]:NULL);
+				},
+			],
             'message:ntext',
-            'status',
-            'created_at',
-            'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 
