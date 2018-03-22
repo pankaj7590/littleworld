@@ -47,9 +47,9 @@ return [
         */
 		'assetManager' => [
 			'bundles' => [
-				'yii\web\JqueryAsset' => [
-					'sourcePath' => null, 'js' => [],
-				],
+				// 'yii\web\JqueryAsset' => [
+					// 'sourcePath' => null, 'js' => [],
+				// ],
 				'yii\bootstrap\BootstrapAsset' => [
 					'sourcePath' => null, 'css' => [],
 				],

@@ -6,16 +6,13 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Media */
 
-$this->title = $model->id;
+$this->title = $model->alt;
 $this->params['breadcrumbs'][] = ['label' => 'Media', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="media-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -28,15 +25,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'media_type',
+			[
+				'attribute' => 'file_name',
+				'filter' => false,
+				'value' => function($data){
+					$fileName = ($data->file_name?$data->file_name:"");
+					return \common\components\MediaHelper::getImageUrl($fileName);
+				},
+				'format' => ['image', ['width' => '100']],
+			],
             'alt',
-            'file_name',
             'file_type',
             'file_size',
-            'status',
-            'created_at',
-            'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

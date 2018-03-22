@@ -116,7 +116,11 @@ class MediaController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+		if(Yii::$app->request->referrer){
+			return $this->redirect(Yii::$app->request->referrer);
+		}else{
+			return $this->redirect(['index']);
+		}
     }
 
     /**

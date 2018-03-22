@@ -37,7 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
 				'class' => 'yii\grid\ActionColumn',
+				'template' => '{view} {delete}',
 				'buttons' => [
+					'view' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['media/view', 'id' => $model->media_id]);
+					},
+					'delete' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['media/delete', 'id' => $model->media_id], ['data' => ['method' => 'post', 'confirm' => 'Are you sure you want to delete this picture from gallery?']]);
+					},
 				],
 			],
         ],
