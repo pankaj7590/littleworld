@@ -12,6 +12,7 @@ use common\models\Student;
  */
 class StudentSearch extends Student
 {
+	public $guardian_id;
     /**
      * @inheritdoc
      */
@@ -41,7 +42,7 @@ class StudentSearch extends Student
      */
     public function search($params)
     {
-        $query = Student::find();
+        $query = Student::find()->joinWith('studentGuardians');
 
         // add conditions that should always apply here
 
@@ -56,6 +57,10 @@ class StudentSearch extends Student
             // $query->where('0=1');
             return $dataProvider;
         }
+		
+		if($this->guardian_id){
+			$query->andWhere(['guardian_id' => $this->guardian_id]);
+		}
 
         // grid filtering conditions
         $query->andFilterWhere([

@@ -6,6 +6,8 @@ use Yii;
 use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
+use yii\web\UploadedFile;
+use common\components\MediaUploader;
 
 /**
  * This is the model class for table "guardian".
@@ -37,6 +39,10 @@ use yii\behaviors\BlameableBehavior;
  */
 class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
 {
+	public $guardian_relation;
+	public $student_id;
+	public $profilePictureFile, $password;
+	
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 	
@@ -68,9 +74,10 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['name', 'address', 'username', 'auth_key', 'password_hash', 'email', 'phone'], 'required'],
+            [['profilePictureFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png'],
             [['address'], 'string'],
-            [['dob', 'photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['dob', 'photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'guardian_relation'], 'integer'],
+            [['name', 'username', 'password_hash', 'password_reset_token', 'email', 'password'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['phone'], 'string', 'max' => 20],
             [['username'], 'unique'],
@@ -83,6 +90,30 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
+	
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+			if(!$insert && $this->password){
+				$this->setPassword($this->password);
+				$this->generateAuthKey();
+			}
+			$image = UploadedFile::getInstance($this, 'profilePictureFile');
+			if($image){
+				if($image != null && !$image->getHasError()) {
+					if($mediaDetails = MediaUploader::uploadFiles($image)){
+						$this->photo = $mediaDetails['media_id'];
+					}
+				}
+			}
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * @inheritdoc
@@ -93,7 +124,7 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'name' => 'Name',
             'address' => 'Address',
-            'dob' => 'Dob',
+            'dob' => 'Date Of Birth',
             'photo' => 'Photo',
             'username' => 'Username',
             'auth_key' => 'Auth Key',
@@ -106,6 +137,8 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'guardian_relation' => 'Relation',
+            'profilePictureFile' => 'Profile Picture',
         ];
     }
 
@@ -120,7 +153,7 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPhoto0()
+    public function getPhotoPicture()
     {
         return $this->hasOne(Media::className(), ['id' => 'photo']);
     }
@@ -295,4 +328,12 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+	
+   /**
+    * @return \yii\db\ActiveQuery
+    */
+   public function getProfilePicture()
+   {
+       return $this->hasOne(Media::className(), ['id' => 'profile_picture']);
+   }
 }

@@ -14,12 +14,12 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-frontend',
+            'csrfParam' => '_csrf-nursery-frontend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\Guardian',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-nursery-frontend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -45,13 +45,6 @@ return [
             ],
         ],
         */
-		'assetManager' => [
-			'bundles' => [
-				'yii\web\JqueryAsset' => [
-				   'js' => ['js/library/jquery.js'],
-				],
-			],
-		],
     ],
     'params' => $params,
 ];

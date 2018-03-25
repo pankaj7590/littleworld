@@ -12,7 +12,7 @@ use yii\behaviors\BlameableBehavior;
  * @property int $id
  * @property int $student_id
  * @property int $guardian_id
- * @property int $relation
+ * @property int $guardian_relation
  * @property int $status
  * @property int $created_by
  * @property int $updated_by
@@ -54,7 +54,7 @@ class StudentGuardian extends \yii\db\ActiveRecord
     {
         return [
             [['student_id', 'guardian_id'], 'required'],
-            [['student_id', 'guardian_id', 'relation', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['student_id', 'guardian_id', 'guardian_relation', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['guardian_id'], 'exist', 'skipOnError' => true, 'targetClass' => Guardian::className(), 'targetAttribute' => ['guardian_id' => 'id']],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => Student::className(), 'targetAttribute' => ['student_id' => 'id']],
@@ -71,7 +71,7 @@ class StudentGuardian extends \yii\db\ActiveRecord
             'id' => 'ID',
             'student_id' => 'Student',
             'guardian_id' => 'Guardian',
-            'relation' => 'Relation',
+            'guardian_relation' => 'Relation',
             'status' => 'Status',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',

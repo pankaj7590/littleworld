@@ -12,6 +12,8 @@ use common\models\Guardian;
  */
 class GuardianSearch extends Guardian
 {
+	public $student_id;
+	
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class GuardianSearch extends Guardian
     {
         return [
             [['id', 'dob', 'photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'address', 'username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'phone'], 'safe'],
+            [['name', 'address', 'username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'phone', 'student_id'], 'safe'],
         ];
     }
 
@@ -41,7 +43,7 @@ class GuardianSearch extends Guardian
      */
     public function search($params)
     {
-        $query = Guardian::find();
+        $query = Guardian::find()->joinWith('studentGuardians');
 
         // add conditions that should always apply here
 
@@ -56,6 +58,10 @@ class GuardianSearch extends Guardian
             // $query->where('0=1');
             return $dataProvider;
         }
+		
+		if($this->student_id){
+			$query->andWhere(['student_id' => $this->student_id]);
+		}
 
         // grid filtering conditions
         $query->andFilterWhere([

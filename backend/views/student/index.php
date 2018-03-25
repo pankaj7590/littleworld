@@ -8,6 +8,9 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Students';
+if($guardian){
+	$this->params['breadcrumbs'][] = ['label' => $guardian->name, 'url' => ['guardian/view', 'id' => $guardian->id]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-index">
@@ -35,7 +38,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'address:ntext',
             'dob:date',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{view} {update} {delete} {guardians}',
+				'buttons' => [
+					'guardians' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-user"></span>', ['guardian/index', 'id' => $model->id]);
+					},
+				],
+			],
         ],
     ]); ?>
 </div>

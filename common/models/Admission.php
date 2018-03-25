@@ -70,7 +70,7 @@ class Admission extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'student_id' => 'Student',
-            'year' => 'Year',
+            'year' => 'Admission Year',
             'fee' => 'Fee',
             'is_paid' => 'Is Paid',
             'status' => 'Status',

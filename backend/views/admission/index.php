@@ -21,10 +21,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'student_id',
+            [
+				'attribute' => 'student_id',
+				'value' => function($data){
+					return ($data->student?$data->student->name:NULL);
+				},
+			],
             'year',
             'fee',
-            'is_paid',
+            [
+				'attribute' => 'is_paid',
+				'value' => function($data){
+					return ($data->is_paid?'Yes':'No');
+				},
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -14,12 +14,12 @@ return [
     'modules' => [],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-backend',
+            'csrfParam' => '_csrf-nursery-backend',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-nursery-backend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -45,25 +45,6 @@ return [
             ],
         ],
         */
-		'assetManager' => [
-			'bundles' => [
-				// 'yii\web\JqueryAsset' => [
-					// 'sourcePath' => null, 'js' => [],
-				// ],
-				'yii\bootstrap\BootstrapAsset' => [
-					'sourcePath' => null, 'css' => [],
-				],
-				'yii\bootstrap\BootstrapPluginAsset' => [
-					'sourcePath' => null, 'js' => [],
-				],
-				'yii\jui\JuiAsset' => [
-					'sourcePath' => null, 'css' => [], 'js' => [],
-				],
-				'\rmrevin\yii\fontawesome\AssetBundle' => [
-					'sourcePath' => null, 'css' => [],
-				],
-			],
-		],
     ],
     'params' => $params,
 ];

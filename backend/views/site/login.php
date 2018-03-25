@@ -30,7 +30,7 @@ $fieldOptions2 = [
 	'inputTemplate' => "{input}<i class='glyphicon glyphicon-lock form-control-feedback'></i>",
 ];
 ?>
-<div class="sb-box">
+<div class="login-panel sb-box">
 	<div class="sb-logo">
 		<?= Html::a('<b>Little World</b> Admin', Yii::$app->homeUrl) ?>
 	</div>

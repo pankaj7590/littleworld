@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\Guardian;
 use common\models\Student;
 use common\models\StudentSearch;
 use yii\web\Controller;
@@ -43,14 +44,20 @@ class StudentController extends Controller
      * Lists all Student models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id=NULL)
     {
         $searchModel = new StudentSearch();
+        $guardian = null;
+		if($id != NULL){
+			$guardian = $this->findGuardian($id);
+			$searchModel->guardian_id = $guardian->id;
+		}
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'guardian' => $guardian,
         ]);
     }
 
@@ -133,5 +140,21 @@ class StudentController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Finds the Guardian model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Student the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findGuardian($id)
+    {
+        if (($model = Guardian::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested guardian does not exist.');
     }
 }

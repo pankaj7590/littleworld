@@ -118,3 +118,11 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.sb-logo  a{
+	color: #696969;
+}
+.sb-logo {
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 10px;
+}

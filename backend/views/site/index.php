@@ -13,7 +13,6 @@ use yii\bootstrap\Html;
 use yii\bootstrap\Button;
 use yii\bootstrap\ButtonDropdown;
 use yii\bootstrap\ActiveForm;
-use p2m\helpers\FA;
 
 /* @var $this yii\web\View */
 
@@ -28,7 +27,7 @@ $this->title = 'Dashboard';
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
-							<?= FA::i('comments fa-5x') ?>
+							<i class="fa fa-comments fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge">26</div>
@@ -39,7 +38,7 @@ $this->title = 'Dashboard';
 				<a href="#">
 					<div class="panel-footer">
 						<span class="pull-left">View Details</span>
-						<span class="pull-right"><?= FA::i('arrow-circle-right') ?></span>
+						<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
 						<div class="clearfix"></div>
 					</div>
 				</a>
@@ -50,7 +49,7 @@ $this->title = 'Dashboard';
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
-							<?= FA::i('tasks fa-5x') ?>
+							<i class="fa fa-tasks fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge">12</div>
@@ -61,7 +60,7 @@ $this->title = 'Dashboard';
 				<a href="#">
 					<div class="panel-footer">
 						<span class="pull-left">View Details</span>
-						<span class="pull-right"><?= FA::i('arrow-circle-right') ?></span>
+						<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
 						<div class="clearfix"></div>
 					</div>
 				</a>
@@ -72,7 +71,7 @@ $this->title = 'Dashboard';
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
-							<?= FA::i('shopping-cart fa-5x') ?>
+							<i class="fa fa-shopping-cart fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge">124</div>
@@ -83,7 +82,7 @@ $this->title = 'Dashboard';
 				<a href="#">
 					<div class="panel-footer">
 						<span class="pull-left">View Details</span>
-						<span class="pull-right"><?= FA::i('arrow-circle-right') ?></span>
+						<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
 						<div class="clearfix"></div>
 					</div>
 				</a>
@@ -94,7 +93,7 @@ $this->title = 'Dashboard';
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
-							<?= FA::i('support fa-5x') ?>
+							<i class="fa fa-support fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge">13</div>
@@ -105,7 +104,7 @@ $this->title = 'Dashboard';
 				<a href="#">
 					<div class="panel-footer">
 						<span class="pull-left">View Details</span>
-						<span class="pull-right"><?= FA::i('arrow-circle-right') ?></span>
+						<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
 						<div class="clearfix"></div>
 					</div>
 				</a>
@@ -116,7 +115,7 @@ $this->title = 'Dashboard';
 		<div class="col-lg-8">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<?= FA::i('bar-chart-o fa-fw') ?> Area Chart Example
+					<i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
 					<div class="pull-right">
 						<?= ButtonDropdown::widget([
 							'label' => 'Actions',
@@ -142,7 +141,7 @@ $this->title = 'Dashboard';
 			</div><!-- /.panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<?= FA::i('bar-chart-o fa-fw') ?> Bar Chart Example
+					<i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
 					<div class="pull-right">
 						<?= ButtonDropdown::widget([
 							'label' => 'Actions',
@@ -239,18 +238,18 @@ $this->title = 'Dashboard';
 			</div><!-- /.panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<?= FA::i('clock-o fa-fw') ?> Responsive Timeline
+					<i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<ul class="timeline">
 						<li>
-							<div class="timeline-badge"><?= FA::i('check') ?>
+							<div class="timeline-badge"><i class="fa fa-check fa-fw"></i>
 							</div>
 							<div class="timeline-panel">
 								<div class="timeline-heading">
 									<h4 class="timeline-title">Lorem ipsum dolor</h4>
-									<p><small class="text-muted"><?= FA::i('clock-o') ?> 11 hours ago via Twitter</small>
+									<p><small class="text-muted"><i class="fa fa-clock-o fa-fw"></i> 11 hours ago via Twitter</small>
 									</p>
 								</div>
 								<div class="timeline-body">
@@ -259,7 +258,7 @@ $this->title = 'Dashboard';
 							</div>
 						</li>
 						<li class="timeline-inverted">
-							<div class="timeline-badge warning"><?= FA::i('credit-card') ?>
+							<div class="timeline-badge warning"><i class="fa fa-credit-card fa-fw"></i>
 							</div>
 							<div class="timeline-panel">
 								<div class="timeline-heading">
@@ -272,7 +271,7 @@ $this->title = 'Dashboard';
 							</div>
 						</li>
 						<li>
-							<div class="timeline-badge danger"><?= FA::i('bomb') ?>
+							<div class="timeline-badge danger"><i class="fa fa-bomb fa-fw"></i>
 							</div>
 							<div class="timeline-panel">
 								<div class="timeline-heading">
@@ -294,7 +293,7 @@ $this->title = 'Dashboard';
 							</div>
 						</li>
 						<li>
-							<div class="timeline-badge info"><?= FA::i('save') ?>
+							<div class="timeline-badge info"><i class="fa fa-save fa-fw"></i>
 							</div>
 							<div class="timeline-panel">
 								<div class="timeline-heading">
@@ -305,7 +304,7 @@ $this->title = 'Dashboard';
 									<hr>
 									<div class="btn-group">
 										<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-											<?= FA::i('gear') ?>  <span class="caret"></span>
+											<i class="fa fa-gear fa-fw"></i>  <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
 											<li><a href="#">Action</a>
@@ -333,7 +332,7 @@ $this->title = 'Dashboard';
 							</div>
 						</li>
 						<li class="timeline-inverted">
-							<div class="timeline-badge success"><?= FA::i('graduation-cap') ?>
+							<div class="timeline-badge success"><i class="fa fa-graduation-cap fa-fw"></i>
 							</div>
 							<div class="timeline-panel">
 								<div class="timeline-heading">
@@ -353,53 +352,53 @@ $this->title = 'Dashboard';
 		<div class="col-lg-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<?= FA::i('bell fa-fw') ?> Notifications Panel
+					<i class="fa fa-bell fa-fw"></i> Notifications Panel
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<div class="list-group">
 						<a href="#" class="list-group-item">
-							<?= FA::i('comment fa-fw') ?> New Comment
+							<i class="fa fa-comment fa-fw"></i> New Comment
 							<span class="pull-right text-muted small"><em>4 minutes ago</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('twitter fa-fw') ?> 3 New Followers
+							<i class="fa fa-twitter fa-fw"></i> 3 New Followers
 							<span class="pull-right text-muted small"><em>12 minutes ago</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('envelope fa-fw') ?> Message Sent
+							<i class="fa fa-envelope fa-fw"></i> Message Sent
 							<span class="pull-right text-muted small"><em>27 minutes ago</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('tasks fa-fw') ?> New Task
+							<i class="fa fa-tasks fa-fw"></i> New Task
 							<span class="pull-right text-muted small"><em>43 minutes ago</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('upload fa-fw') ?> Server Rebooted
+							<i class="fa fa-upload fa-fw"></i> Server Rebooted
 							<span class="pull-right text-muted small"><em>11:32 AM</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('bolt fa-fw') ?> Server Crashed!
+							<i class="fa fa-bolt fa-fw"></i> Server Crashed!
 							<span class="pull-right text-muted small"><em>11:13 AM</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('warning fa-fw') ?> Server Not Responding
+							<i class="fa fa-warning fa-fw"></i> Server Not Responding
 							<span class="pull-right text-muted small"><em>10:57 AM</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('shopping-cart fa-fw') ?> New Order Placed
+							<i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
 							<span class="pull-right text-muted small"><em>9:49 AM</em>
 							</span>
 						</a>
 						<a href="#" class="list-group-item">
-							<?= FA::i('money fa-fw') ?> Payment Received
+							<i class="fa fa-money fa-fw"></i> Payment Received
 							<span class="pull-right text-muted small"><em>Yesterday</em>
 							</span>
 						</a>
@@ -411,7 +410,7 @@ $this->title = 'Dashboard';
 			</div><!-- /.panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<?= FA::i('bar-chart-o fa-fw') ?> Donut Chart Example
+					<i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
 				</div>
 				<div class="panel-body">
 					<div id="morris-donut-chart"></div>
@@ -421,37 +420,37 @@ $this->title = 'Dashboard';
 			</div><!-- /.panel -->
 			<div class="chat-panel panel panel-default">
 				<div class="panel-heading">
-					<?= FA::i('comments fa-fw') ?>
+					<i class="fa fa-comments fa-fw"></i>
 					Chat
 					<div class="btn-group pull-right">
 						<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-							<?= FA::i('chevron-down') ?>
+							<i class="fa fa-chevron-down fa-fw"></i>
 						</button>
 						<ul class="dropdown-menu slidedown">
 							<li>
 								<a href="#">
-									<?= FA::i('refresh fa-fw') ?> Refresh
+									<i class="fa fa-refresh fa-fw"></i> Refresh
 								</a>
 							</li>
 							<li>
 								<a href="#">
-									<?= FA::i('check-circle fa-fw') ?> Available
+									<i class="fa fa-check-circle fa-fw"></i> Available
 								</a>
 							</li>
 							<li>
 								<a href="#">
-									<?= FA::i('times fa-fw') ?> Busy
+									<i class="fa fa-times fa-fw"></i> Busy
 								</a>
 							</li>
 							<li>
 								<a href="#">
-									<?= FA::i('clock-o fa-fw') ?> Away
+									<i class="fa fa-clock-o fa-fw"></i> Away
 								</a>
 							</li>
 							<li class="divider"></li>
 							<li>
 								<a href="#">
-									<?= FA::i('sign-out fa-fw') ?> Sign Out
+									<i class="fa fa-sign-out fa-fw"></i> Sign Out
 								</a>
 							</li>
 						</ul>
@@ -468,7 +467,7 @@ $this->title = 'Dashboard';
 								<div class="header">
 									<strong class="primary-font">Jack Sparrow</strong>
 									<small class="pull-right text-muted">
-										<?= FA::i('clock-o fa-fw') ?> 12 mins ago
+										<i class="fa fa-clock-o fa-fw"></i> 12 mins ago
 									</small>
 								</div>
 								<p>
@@ -483,7 +482,7 @@ $this->title = 'Dashboard';
 							<div class="chat-body clearfix">
 								<div class="header">
 									<small class=" text-muted">
-										<?= FA::i('clock-o fa-fw') ?> 13 mins ago</small>
+										<i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
 									<strong class="pull-right primary-font">Bhaumik Patel</strong>
 								</div>
 								<p>
@@ -499,7 +498,7 @@ $this->title = 'Dashboard';
 								<div class="header">
 									<strong class="primary-font">Jack Sparrow</strong>
 									<small class="pull-right text-muted">
-										<?= FA::i('clock-o fa-fw') ?> 14 mins ago</small>
+										<i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
 								</div>
 								<p>
 									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
@@ -513,7 +512,7 @@ $this->title = 'Dashboard';
 							<div class="chat-body clearfix">
 								<div class="header">
 									<small class=" text-muted">
-										<?= FA::i('clock-o fa-fw') ?> 15 mins ago</small>
+										<i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
 									<strong class="pull-right primary-font">Bhaumik Patel</strong>
 								</div>
 								<p>
@@ -538,15 +537,6 @@ $this->title = 'Dashboard';
 				<!-- /.panel-footer -->
 			</div><!-- /.panel .chat-panel -->
 		</div>
-	</div>
-
-	<!-- this goes on every site file in p2made demos -->
-	<br><div class="alert alert-success" role="alert">
-		<ul class="fa-ul">
-			<li>
-				<?= FA::fw(FA::_CODE)->li()->size(FA::SIZE_LARGE) ?> <code><?= __FILE__ ?></code>
-			</li>
-		</ul>
 	</div>
 
 </div><!-- /#content-wrapper -->

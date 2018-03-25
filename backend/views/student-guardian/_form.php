@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'guardian_id')->textInput() ?>
 
-    <?= $form->field($model, 'relation')->textInput() ?>
+    <?= $form->field($model, 'guardian_relation')->textInput() ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 

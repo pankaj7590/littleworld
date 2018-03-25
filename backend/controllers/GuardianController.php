@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\Student;
+use common\models\StudentGuardian;
 use common\models\Guardian;
 use common\models\GuardianSearch;
 use yii\web\Controller;
@@ -43,14 +45,20 @@ class GuardianController extends Controller
      * Lists all Guardian models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id=NULL)
     {
         $searchModel = new GuardianSearch();
+		$student = null;
+		if($id){
+			$student = $this->findStudent($id);
+			$searchModel->student_id = $student->id;
+		}
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'student' => $student,
         ]);
     }
 
@@ -72,16 +80,31 @@ class GuardianController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
+		$student = $this->findStudent($id);
         $model = new Guardian();
+		$model->student_id = $student->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())){
+			$model->setPassword($model->password);
+			$model->generateAuthKey();
+			if($model->save()) {
+				$studentGuardian = new StudentGuardian();
+				$studentGuardian->student_id = $student->id;
+				$studentGuardian->guardian_id = $model->id;
+				$studentGuardian->guardian_relation = $model->guardian_relation;
+				$studentGuardian->save();
+			
+				return $this->redirect(['view', 'id' => $model->id]);
+			}else{
+				Yii::$app->session->setFlash('error', json_encode($model->getErrors()));
+			}
         }
 
         return $this->render('create', [
             'model' => $model,
+            'student' => $student,
         ]);
     }
 
@@ -133,5 +156,21 @@ class GuardianController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Finds the Student model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Guardian the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findStudent($id)
+    {
+        if (($model = Student::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested student does not exist.');
     }
 }

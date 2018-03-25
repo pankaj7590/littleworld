@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\components\Relations;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Guardian */
@@ -11,36 +12,26 @@ use yii\widgets\ActiveForm;
 <div class="guardian-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+	<?php if($model->photoPicture){?>
+		<div class="controls">
+			<img src="<?= \common\components\MediaHelper::getImageUrl($model->photoPicture->file_name)?>"/>
+		</div>
+	<?php }?>
+	<?= $form->field($model, 'profilePictureFile')->fileInput() ?>
+	
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'dob')->textInput() ?>
-
-    <?= $form->field($model, 'photo')->textInput() ?>
-
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
+	
+	<?= $form->field($model, 'password')->passwordInput() ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'dob')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

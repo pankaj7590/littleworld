@@ -8,15 +8,15 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Guardians';
+if($student){
+	$this->params['breadcrumbs'][] = ['label' => $student->name, 'url' => ['student/view', 'id' => $student->id]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="guardian-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Guardian', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Guardian', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,24 +25,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+			[
+				'attribute' => 'photo',
+				'filter' => false,
+				'value' => function($data){
+					$fileName = ($data->photoPicture?$data->photoPicture->file_name:"");
+					return \common\components\MediaHelper::getImageUrl($fileName);
+				},
+				'format' => ['image', ['width' => '100']],
+			],
             'name',
-            'address:ntext',
             'dob',
-            'photo',
-            //'username',
-            //'auth_key',
-            //'password_hash',
-            //'password_reset_token',
-            //'email:email',
-            //'phone',
-            //'status',
-            //'created_by',
-            //'updated_by',
-            //'created_at',
-            //'updated_at',
+            'email:email',
+            'phone',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{view} {update} {delete} {students}',
+				'buttons' => [
+					'students' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-user"></span>', ['student/index', 'id' => $model->id]);
+					},
+				],
+			],
         ],
     ]); ?>
 </div>

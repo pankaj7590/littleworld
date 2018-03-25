@@ -18,7 +18,7 @@ class StudentGuardianSearch extends StudentGuardian
     public function rules()
     {
         return [
-            [['id', 'student_id', 'guardian_id', 'relation', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'student_id', 'guardian_id', 'guardian_relation', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -61,7 +61,7 @@ class StudentGuardianSearch extends StudentGuardian
             'id' => $this->id,
             'student_id' => $this->student_id,
             'guardian_id' => $this->guardian_id,
-            'relation' => $this->relation,
+            'guardian_relation' => $this->guardian_relation,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
