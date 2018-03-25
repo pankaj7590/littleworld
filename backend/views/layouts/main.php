@@ -97,6 +97,17 @@ if (Yii::$app->user->isGuest) {
 									]) ?>
 								</li>
 								<li>
+									<a href="#"><i class="fa fa-user fa-fw"></i> Guardians<?= $arrowIcon ?></a>
+									<?= Nav::widget([
+										'activateParents' => true,
+										'encodeLabels' => false,
+										'options' => ['class' => 'nav nav-second-level'],
+										'items' => [
+											['label' => 'Manage Guardians', 'url' => ['/guardian/index']],
+										],
+									]) ?>
+								</li>
+								<li>
 									<a href="#"><i class="fa fa-user fa-fw"></i> Students<?= $arrowIcon ?></a>
 									<?= Nav::widget([
 										'activateParents' => true,

@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 				'format' => ['image', ['width' => '100']],
 			],
-            'news_event_date:datetime',
+            'news_event_date',
             'place:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],

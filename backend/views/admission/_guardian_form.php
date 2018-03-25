@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\Relations;
 use yii\web\View;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Guardian */
@@ -33,7 +34,14 @@ use yii\web\View;
 	
 	<button type="button" id="copy-student-address" class="btn btn-default btn-xs">Copy student address</button>
 
-    <?= $form->field($model, 'dob')->textInput() ?>
+    <?= $form->field($model, 'dob')->textInput()->widget(DateTimePicker::classname(), [
+		'options' => ['placeholder' => 'Enter date of birth ...'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'minView' => 2,
+			'format' => Yii::$app->params['jsDateFormat'],
+		]
+	]); ?>
 
 </div>
 <?php 

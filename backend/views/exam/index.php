@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					return ($data->type?Exam::$types[$data->type]:NULL);
 				},
 			],
-            'scheduled_date:datetime',
+            'scheduled_date',
 			[
 				'attribute' => 'status',
 				'value' => function($data){

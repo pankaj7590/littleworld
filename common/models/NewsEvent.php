@@ -70,11 +70,12 @@ class NewsEvent extends \yii\db\ActiveRecord
             [['title', 'content'], 'required'],
             [['photoPictureFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png'],
             [['content', 'place'], 'string'],
-            [['photo', 'news_event_date', 'type', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['photo', 'type', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['photo'], 'exist', 'skipOnError' => true, 'targetClass' => Media::className(), 'targetAttribute' => ['photo' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+			[['news_event_date'], 'safe'],
         ];
     }
 	
@@ -92,10 +93,24 @@ class NewsEvent extends \yii\db\ActiveRecord
 					}
 				}
 			}
+			if($this->news_event_date){
+				$this->news_event_date = strtotime($this->news_event_date);
+			}
             return true;
         } else {
             return false;
         }
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {	
+		if($this->news_event_date){
+			$this->news_event_date = Yii::$app->formatter->asDatetime($this->news_event_date);
+		}
+        return parent::afterFind();
     }
 
     /**
@@ -109,7 +124,7 @@ class NewsEvent extends \yii\db\ActiveRecord
             'content' => 'Content',
             'photo' => 'Photo',
             'photoPictureFile' => 'Photo',
-            'news_event_date' => 'News Event Date',
+            'news_event_date' => 'Date',
             'type' => 'Type',
             'place' => 'Place',
             'status' => 'Status',

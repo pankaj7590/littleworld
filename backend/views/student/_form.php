@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Student */
@@ -22,7 +23,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'dob')->textInput() ?>
+    <?= $form->field($model, 'dob')->textInput()->widget(DateTimePicker::classname(), [
+		'options' => ['placeholder' => 'Enter date of birth ...'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'minView' => 2,
+			'format' => Yii::$app->params['jsDateFormat'],
+		]
+	]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

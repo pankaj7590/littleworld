@@ -80,10 +80,11 @@ class Exam extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['year', 'type', 'scheduled_date', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['year', 'type', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+			[['scheduled_date'], 'safe'],
         ];
     }
 
@@ -104,6 +105,32 @@ class Exam extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+			if($this->scheduled_date){
+				$this->scheduled_date = strtotime($this->scheduled_date);
+			}
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {	
+		if($this->scheduled_date){
+			$this->scheduled_date = Yii::$app->formatter->asDatetime($this->scheduled_date);
+		}
+        return parent::afterFind();
     }
 
     /**

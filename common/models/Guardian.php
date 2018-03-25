@@ -76,7 +76,7 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
             [['name', 'address', 'username', 'auth_key', 'password_hash', 'email', 'phone'], 'required'],
             [['profilePictureFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png'],
             [['address'], 'string'],
-            [['dob', 'photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'guardian_relation'], 'integer'],
+            [['photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'guardian_relation'], 'integer'],
             [['name', 'username', 'password_hash', 'password_reset_token', 'email', 'password'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['phone'], 'string', 'max' => 20],
@@ -88,6 +88,7 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+			[['dob'], 'safe'],
         ];
     }
 	
@@ -109,10 +110,24 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
 					}
 				}
 			}
+			if($this->dob){
+				$this->dob = strtotime($this->dob);
+			}
             return true;
         } else {
             return false;
         }
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {	
+		if($this->dob){
+			$this->dob = Yii::$app->formatter->asDate($this->dob);
+		}
+        return parent::afterFind();
     }
 
     /**

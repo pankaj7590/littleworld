@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\NewsEvent */
@@ -23,7 +24,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'news_event_date')->textInput() ?>
+    <?= $form->field($model, 'news_event_date')->textInput()->widget(DateTimePicker::classname(), [
+		'options' => ['placeholder' => 'Enter date & time ...'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			// 'minView' => 4,
+			'format' => Yii::$app->params['jsDateTimeFormat'],
+		]
+	]); ?>
 
     <?= $form->field($model, 'place')->textInput(['maxlength' => true]) ?>
 

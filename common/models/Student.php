@@ -66,10 +66,11 @@ class Student extends \yii\db\ActiveRecord
             [['name', 'address'], 'required'],
             [['photoPictureFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png'],
             [['address'], 'string'],
-            [['dob', 'photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['photo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+			[['dob'], 'safe'],
         ];
     }
 	
@@ -87,10 +88,24 @@ class Student extends \yii\db\ActiveRecord
 					}
 				}
 			}
+			if($this->dob){
+				$this->dob = strtotime($this->dob);
+			}
             return true;
         } else {
             return false;
         }
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {	
+		if($this->dob){
+			$this->dob = Yii::$app->formatter->asDate($this->dob);
+		}
+        return parent::afterFind();
     }
 
     /**

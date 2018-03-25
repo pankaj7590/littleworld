@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\models\Exam;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Exam */
@@ -19,7 +20,14 @@ use common\models\Exam;
 
     <?= $form->field($model, 'type')->radioList(Exam::$types) ?>
 
-    <?= $form->field($model, 'scheduled_date')->textInput() ?>
+    <?= $form->field($model, 'scheduled_date')->textInput()->widget(DateTimePicker::classname(), [
+		'options' => ['placeholder' => 'Enter exam date & time ...'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			// 'minView' => 4,
+			'format' => Yii::$app->params['jsDateTimeFormat'],
+		]
+	]); ?>
 
     <?= $form->field($model, 'status')->radioList(Exam::$statuses) ?>
 

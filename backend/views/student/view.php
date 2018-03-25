@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
             'name',
             'address:ntext',
-            'dob:date',
+            'dob',
             // 'status',
             [
 				'attribute' => 'created_by',
