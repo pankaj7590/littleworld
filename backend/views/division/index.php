@@ -24,7 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'year',
             'name',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{view} {update} {delete} {students}',
+				'buttons' => [
+					'students' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-user"></span>', ['division-student/index', 'id' => $model->id]);
+					}
+				],
+			],
         ],
     ]); ?>
 </div>

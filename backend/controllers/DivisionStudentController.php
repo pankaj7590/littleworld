@@ -3,10 +3,13 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\Division;
+use common\models\Student;
 use common\models\DivisionStudent;
 use common\models\DivisionStudentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
@@ -43,9 +46,11 @@ class DivisionStudentController extends Controller
      * Lists all DivisionStudent models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+		$divisionModel = $this->findDivision($id);
         $searchModel = new DivisionStudentSearch();
+        $searchModel->division_id = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -72,16 +77,48 @@ class DivisionStudentController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
+		$divisionModel = $this->findDivision($id);
         $model = new DivisionStudent();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+		$model->division_id = $id;
+		
+		$alreadyAddedModels = $divisionModel->divisionStudents;
+		$alreadyAdded = [];
+		foreach($alreadyAddedModels as $alreadyAddedModel){
+			$alreadyAdded[$alreadyAddedModel->student_id] = $alreadyAddedModel->student_id;
+		}
+		
+		
+		$studentModels = Student::find()->joinWith('admissions')->where(['year' => $model->division->year])->andWhere(['not in', 'student.id', $alreadyAdded])->all();
+		$students = [];
+		foreach($studentModels as $student){
+			$students[$student->id] = $student->name;
+		}
+		
+        if ($model->load(Yii::$app->request->post())){
+			$transaction = Yii::$app->db->beginTransaction();
+			try{
+				foreach($model->student_id as $s){
+					$divisionStudent = new DivisionStudent();
+					$divisionStudent->division_id = $divisionModel->id;
+					$divisionStudent->student_id = $s;
+					if(!$divisionStudent->save()) {
+						Yii::$app->session->setFlash('error', json_encode($divisionStudent->getErrors()));
+						throw new ServerErrorHttpException('Student not saved.');
+					}
+				}
+				$transaction->commit();
+			}catch(Exception $e){
+				$transaction->rollBack();
+				throw new ServerErrorHttpException('Something went wrong. Please try again.');
+			}
+            return $this->redirect(['index', 'id' => $divisionModel->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'students' => $students,
         ]);
     }
 
@@ -114,9 +151,10 @@ class DivisionStudentController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+		$model = $this->findModel($id);
+		$model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'id' => $model->division_id]);
     }
 
     /**
@@ -133,5 +171,21 @@ class DivisionStudentController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Finds the Division model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return DivisionStudent the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findDivision($id)
+    {
+        if (($model = Division::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested division does not exist.');
     }
 }

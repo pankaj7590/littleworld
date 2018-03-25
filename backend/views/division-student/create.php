@@ -6,16 +6,16 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\DivisionStudent */
 
-$this->title = 'Create Division Student';
-$this->params['breadcrumbs'][] = ['label' => 'Division Students', 'url' => ['index']];
+$this->title = 'Add Students';
+$this->params['breadcrumbs'][] = ['label' => 'Divisions', 'url' => ['division/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->division->name, 'url' => ['division/view', 'id' => $model->division_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="division-student-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'students' => $students,
     ]) ?>
 
 </div>

@@ -53,6 +53,7 @@ class DivisionStudent extends \yii\db\ActiveRecord
     {
         return [
             [['division_id', 'student_id'], 'required'],
+            [['division_id', 'student_id'], 'unique', 'skipOnError' => true, 'targetAttribute' => ['division_id', 'student_id'], 'message' => 'Student is already present in the division.'],
             [['division_id', 'student_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['division_id'], 'exist', 'skipOnError' => true, 'targetClass' => Division::className(), 'targetAttribute' => ['division_id' => 'id']],
