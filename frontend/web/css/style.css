@@ -411,8 +411,7 @@ dl dd a:hover {
     padding: 3px 10px 5px 10px;
 	width: 247px;
 	resize:none;
-	margin:0px 0 0 0;
-	float:left;
+	margin:5px 0 10px 0;
 	box-shadow: 0 0 3px #c1c1c1;
 }
 #form label {
@@ -445,4 +444,41 @@ dl dd a:hover {
 #login-submit-btn, #signup-submit-btn{
     background: no-repeat;
     border: none;
+}
+.fade.in {
+    opacity: 1;
+}
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+.alert button.close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}
+.alert .close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
 }

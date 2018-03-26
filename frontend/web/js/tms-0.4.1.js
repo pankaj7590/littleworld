@@ -399,7 +399,7 @@
 						,position:'absolute'
 					})
 					.appendTo('body')
-					.load(function(){
+					.on('load', function(){
 						width=buff.width()
 						height=buff.height()
 						
@@ -785,7 +785,7 @@
 				_.parseImgFu()
 			img
 				.appendTo(_.me)
-				.load(function(){
+				.on('load', function(){
 					setTimeout(function(){
 						_.pic
 							.css({

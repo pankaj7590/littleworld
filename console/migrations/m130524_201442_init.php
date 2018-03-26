@@ -49,7 +49,7 @@ class m130524_201442_init extends Migration
 		$this->createTable("contact", [
 			'id' => $this->primaryKey(),
 			'name' => $this->string()->notNull(),
-			'surname' => $this->string()->notNull(),
+			'surname' => $this->string(),
 			'email' => $this->string(),
 			'feedback_type' => $this->smallInteger(),
 			'message' => $this->text(),

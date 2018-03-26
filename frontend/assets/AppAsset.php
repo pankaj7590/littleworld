@@ -18,10 +18,11 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-		'js/jquery-1.7.min.js',
+		// 'js/jquery-1.7.min.js',
 		'js/jquery.easing.1.3.js',
 		'js/uCarousel.js',
 		'js/tms-0.4.1.js',
+		'js/script.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

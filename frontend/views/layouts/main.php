@@ -88,6 +88,31 @@ $baseUrl = $urlManager->baseUrl;
 			  <!--==============================content================================-->
 			  <section id="content">
 				<div class="container_12">
+					<?php
+						$alertTypes = [
+							'error'   => 'alert-danger',
+							'danger'  => 'alert-danger',
+							'success' => 'alert-success',
+							'info'    => 'alert-info',
+							'warning' => 'alert-warning'
+						];
+						$session = Yii::$app->session;
+						$flashes = $session->getAllFlashes();
+
+						foreach ($flashes as $type => $flash) {
+							if (!isset($alertTypes[$type])) {
+								continue;
+							}
+
+							foreach ((array) $flash as $i => $message) {
+								echo '<div class="'.$alertTypes[$type].' alert fade in">
+										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+										'.$message.'
+									</div>';
+							}
+							$session->removeFlash($type);
+						}
+					?>
 					<?= $content;?>
 				  <div class="clear"></div>
 				</div>
@@ -111,7 +136,10 @@ $baseUrl = $urlManager->baseUrl;
 					banners: false,
 					waitBannerAnimation: false,
 					progressBar: false
-				})
+				});
+				$('.alert button.close').on('click', function(){
+					$(this).parents('.alert').remove();
+				});
 			", View::POS_LOAD, "init-slider");
 		?>
 	</body>

@@ -15,6 +15,7 @@ class SignupForm extends Model
     public $email;
     public $phone;
     public $password;
+    public $captcha;
 
 
     /**
@@ -49,6 +50,9 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+			
+            ['captcha', 'required'],
+            ['captcha', 'captcha'],
         ];
     }
 
