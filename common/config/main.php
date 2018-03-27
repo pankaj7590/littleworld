@@ -13,6 +13,6 @@ return [
             'dateFormat' => 'php:M d, Y',
             'datetimeFormat' => 'php:M d, Y h:i A',
        ],
-		'timeZone' => 'Asia/Kolkata',
     ],
+	'timeZone' => 'Asia/Kolkata',
 ];
