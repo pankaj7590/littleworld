@@ -7,16 +7,14 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ExamSubjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Exam Subjects';
+$this->title = 'Subjects';
+$this->params['breadcrumbs'][] = ['label' => 'Exams', 'url' => ['exam/index']];
+$this->params['breadcrumbs'][] = ['label' => $examModel->name, 'url' => ['exam/view', 'id' => $examModel->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="exam-subject-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Exam Subject', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Subjects', ['create', 'id' => $examModel->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,17 +23,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'exam_id',
-            'subject_id',
+			[
+				'attribute' => 'subject_id',
+				'value' => function($data){
+					return ($data->subject?$data->subject->name:null);
+				},
+			],
             'marks',
-            'status',
-            //'created_by',
-            //'updated_by',
-            //'created_at',
-            //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{view} {update} {edit} {delete}',
+				'buttons' => [
+					'view' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['subject/view', 'id' => $model->subject_id]);
+					},
+					'update' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['subject/update', 'id' => $model->subject_id]);
+					},
+					'edit' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-edit"></span>', ['exam-subject/update', 'id' => $model->id]);
+					},
+				]
+			],
         ],
     ]); ?>
 </div>

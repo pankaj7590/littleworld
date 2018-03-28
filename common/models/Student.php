@@ -147,6 +147,14 @@ class Student extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCurrentDivision()
+    {
+        return $this->hasOne(DivisionStudent::className(), ['student_id' => 'id'])->joinWith('division')->where(['year' => date('Y')]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getExamStudents()
     {
         return $this->hasMany(ExamStudent::className(), ['student_id' => 'id']);
@@ -206,5 +214,13 @@ class Student extends \yii\db\ActiveRecord
    public function getPhotoPicture()
    {
        return $this->hasOne(Media::className(), ['id' => 'photo']);
+   }
+	
+   /**
+    * @return \yii\db\ActiveQuery
+    */
+   public function getExamStudentSubject($exam, $exam_subject)
+   {
+       return $this->hasOne(ExamStudentSubject::className(), ['student_id' => 'id'])->where(['exam_id' => $exam, 'exam_subject_id' => $exam_subject]);
    }
 }

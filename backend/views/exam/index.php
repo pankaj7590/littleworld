@@ -38,7 +38,18 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 			],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{view} {update} {delete} {subjects} {marks}',
+				'buttons' => [
+					'subjects' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-list"></span>', ['exam-subject/index', 'id' => $model->id], ['title' => 'Subjects']);
+					},
+					'marks' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-edit"></span>', ['exam-student-subject/index', 'id' => $model->id], ['title' => 'Marks']);
+					},
+				],
+			],
         ],
     ]); ?>
 </div>

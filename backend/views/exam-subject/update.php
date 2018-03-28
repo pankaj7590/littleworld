@@ -5,17 +5,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ExamSubject */
 
-$this->title = 'Update Exam Subject: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Exam Subjects', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'Update Subject: '.$model->subject->name;
+$this->params['breadcrumbs'][] = ['label' => 'Exams', 'url' => ['exam/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->exam->name, 'url' => ['exam/view', 'id' => $model->exam_id]];
+$this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['index', 'id' => $model->exam_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->subject->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="exam-subject-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+		'subjects' => $subjects,
     ]) ?>
 
 </div>

@@ -55,6 +55,7 @@ class ExamSubject extends \yii\db\ActiveRecord
     {
         return [
             [['exam_id', 'subject_id'], 'required'],
+            [['exam_id', 'subject_id'], 'unique', 'skipOnError' => true, 'targetAttribute' => ['exam_id', 'subject_id'], 'message' => 'Subject already added in the exam.'],
             [['exam_id', 'subject_id', 'marks', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['exam_id'], 'exist', 'skipOnError' => true, 'targetClass' => Exam::className(), 'targetAttribute' => ['exam_id' => 'id']],

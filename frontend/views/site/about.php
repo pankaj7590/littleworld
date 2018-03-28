@@ -5,14 +5,15 @@ $urlManager = Yii::$app->urlManager;
 $baseUrl = $urlManager->baseUrl;
 ?>
       <div class="grid_4 bot-1">
-        <h2 class="top-6 p2">Teachers</h2>
-        <p class="text-1 p3">Peter Stanton</p>
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat <a href="#" class="link">More...</a></p>
-        <p class="text-1 top-2 p3">Helen Perton</p>
-        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est <a href="#" class="link">More...</a></p>
-        <p class="text-1 top-2 p3">Jesica Murray</p>
-        <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <br>
-          sed diam <a href="#" class="link">More...</a></p>
+        <h2 class="top-6 p2">Staff</h2>
+		<?php foreach($dataProvider->getModels() as $model){?>
+			<img src="<?= \common\components\MediaHelper::getImageUrl(($data->profilePicture?$data->profilePicture->file_name:""))?>" alt="" class="img-border img-indent">
+			<div class="clear"></div>
+			<p class="text-1 p3"><?= $model->name;?></p>
+			<p>Email: <?= ($model->email);?></p>
+			<p>Phone: <?= ($model->phone);?></p>
+			<div class="clear"></div>
+		<?php }?>
       </div>
       <div class="grid_8">
         <div class="block-1 top-5">
@@ -43,7 +44,6 @@ $baseUrl = $urlManager->baseUrl;
                 <li><a href="#">Feugiat nulla facilisis at vero eros</a></li>
               </ul>
             </div>
-            <div class="pad-2"> <a href="#" class="link-2">Read More</a> </div>
           </div>
         </div>
 					<?= $this->render('../layouts/_footer.php')?>

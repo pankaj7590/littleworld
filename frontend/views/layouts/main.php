@@ -79,7 +79,7 @@ $baseUrl = $urlManager->baseUrl;
 						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/login']);?>" class="clr-2">Login</a></li>
 						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/signup']);?>" class="clr-4">Register</a></li>
 					<?php }else{?>
-						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/my-account']);?>" class="clr-2">My Child</a></li>
+						<li><a href="<?= $urlManager->createAbsoluteUrl(['student/index']);?>" class="clr-2">My Child</a></li>
 						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/logout']);?>" data-method="post" class="clr-4">Logout</a></li>
 					<?php }?>
 				  </ul>

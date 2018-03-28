@@ -7,13 +7,14 @@ $baseUrl = $urlManager->baseUrl;
 				  <div class="grid_4 bot-1">
 					<div class="art"></div>
 					<h2 class="top-1 p2">Events</h2>
-					<p class="text-1 p3">April 18 - “Spring’s Bloom”</p>
-					<p>The PSD source files of this Art School Template are available for free for the registered members of TemplateMonster.com. Feel free to <br>
-					  get them!</p>
-					<p class="text-1 top-2 p3">April 01 - “Smile!”</p>
-					<p>This website template has several pages: Home Page, About Us, Schedule, Gallery, Contact Us (note that contact us form – <br>
-					  doesn’t work).</p>
-					<a href="#" class="link-1 top-3">News Archive</a> </div>
+					<?php foreach($dataProvider->getModels() as $model){?>
+						<img src="<?= \common\components\MediaHelper::getImageUrl(($data->photoPicture?$data->photoPicture->file_name:""))?>" alt="" class="img-border img-indent">
+						<div class="clear"></div>
+						<p class="text-1 p3"><?= date('M d').' - "'.$model->title.'"';?></p>
+						<p><?= $model->content;?></p>
+						<div class="clear"></div>
+					<?php }?>
+					<a href="<?= $urlManager->createAbsoluteUrl(['news-event/event-index'])?>" class="link-1 top-3">All Events</a> </div>
 				  <div class="grid_8">
 					<div class="pad-1">
 					  <h2 class="p2">Welcome to Art School</h2>
