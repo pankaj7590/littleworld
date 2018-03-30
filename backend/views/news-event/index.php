@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'title',
 			[
 				'attribute' => 'photo',
 				'filter' => false,
@@ -42,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 				'format' => ['image', ['width' => '100']],
 			],
+            'title',
             'news_event_date',
             'place:ntext',
 
