@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\Gallery;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\GallerySearch */
@@ -25,7 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
             'type',
-            'status',
+			[
+				'attribute' => 'status',
+				'value' => function($data){
+					return ($data->status?Gallery::$statuses[$data->status]:NULL);
+				},
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
