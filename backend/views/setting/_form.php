@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\Setting;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Setting */
@@ -11,6 +12,8 @@ use yii\widgets\ActiveForm;
 <div class="setting-form">
 
     <?php $form = ActiveForm::begin(); ?>
+	
+	<?= $form->field($model, 'setting_group')->dropdownList(Setting::$groups, ['prompt' => 'Select a group...']) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

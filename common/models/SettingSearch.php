@@ -18,7 +18,7 @@ class SettingSearch extends Setting
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'setting_group'], 'integer'],
             [['name', 'label', 'default_value', 'value'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class SettingSearch extends Setting
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'setting_group' => $this->setting_group,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,

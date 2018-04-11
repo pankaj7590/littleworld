@@ -25,6 +25,22 @@ use yii\behaviors\BlameableBehavior;
  */
 class Setting extends \yii\db\ActiveRecord
 {
+	const GROUP_HEADER = 1;
+	const GROUP_FOOTER = 2;
+	const GROUP_HOME_PAGE = 3;
+	const GROUP_ABOUT_PAGE = 4;
+	const GROUP_SCHEDULE_PAGE = 5;
+	const GROUP_CONTACT_PAGE = 6;
+	
+	public static $groups = [
+		self::GROUP_HEADER => 'Header',
+		self::GROUP_FOOTER => 'Footer',
+		self::GROUP_HOME_PAGE => 'Home',
+		self::GROUP_ABOUT_PAGE => 'About',
+		self::GROUP_SCHEDULE_PAGE => 'Schedule',
+		self::GROUP_CONTACT_PAGE => 'Contact',
+	];
+	
     /**
      * @inheritdoc
      */
@@ -96,4 +112,8 @@ class Setting extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
+	
+	public function getMedia(){
+		return $this->hasOne(Media::className(), ['id' => 'value']);
+	}
 }

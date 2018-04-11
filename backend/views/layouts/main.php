@@ -235,6 +235,7 @@ if (Yii::$app->user->isGuest) {
 										'encodeLabels' => false,
 										'options' => ['class' => 'nav nav-second-level'],
 										'items' => [
+											['label' => 'Theme Options', 'url' => ['/setting/theme-options']],
 											['label' => 'New Setting', 'url' => ['/setting/create']],
 											['label' => 'Manage Settings', 'url' => ['/setting/index']],
 										],

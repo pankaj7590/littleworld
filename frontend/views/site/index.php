@@ -17,7 +17,7 @@ $baseUrl = $urlManager->baseUrl;
 					<a href="<?= $urlManager->createAbsoluteUrl(['news-event/event-index'])?>" class="link-1 top-3">All Events</a> </div>
 				  <div class="grid_8">
 					<div class="pad-1">
-					  <h2 class="p2">Welcome to Art School</h2>
+					  <h2 class="p2">Welcome to Little World</h2>
 					  <p class="text-1">Art School is one of free website templates by TemplateMonster.com team. This template is optimized for 1280X1024 screen resolution. It is also XHTML & CSS valid.</p>
 					</div>
 					<div class="block-1">

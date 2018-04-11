@@ -441,7 +441,7 @@ dl dd a:hover {
     box-shadow: none;
     width: 20px;
 }
-#login-submit-btn, #signup-submit-btn{
+#login-submit-btn, #signup-submit-btn, #contact-submit-btn, #contact-reset-btn{
     background: no-repeat;
     border: none;
 }

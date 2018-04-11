@@ -37,8 +37,8 @@ $baseUrl = $urlManager->baseUrl;
 					<?= $form->field($model, 'verifyCode', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->widget(Captcha::className(), []) ?>
 					<strong class="clear"></strong>
 					<div class="btns pad-2">
-						<?= Html::resetButton('Reset', ['class' => 'link-2', 'name' => 'contact-button']) ?>
-						<?= Html::submitButton('Submit', ['class' => 'link-2', 'name' => 'contact-button']) ?>
+						<?= Html::resetButton('Reset', ['class' => 'link-2', 'id' => 'contact-reset-btn', 'name' => 'contact-button']) ?>
+						<?= Html::submitButton('Submit', ['class' => 'link-2', 'id' => 'contact-submit-btn',  'name' => 'contact-button']) ?>
 					</div>
 				</fieldset>
 			<?php ActiveForm::end(); ?>
