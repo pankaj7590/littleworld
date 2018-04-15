@@ -81,8 +81,8 @@ $urlManager = Yii::$app->urlManager;
 										echo '<div class="col-lg-4 col-sm-12 col-md-4 col-xs-12">';
 											echo '<label class="control-label" for="themeoption-footer_developer">Developer</label>';
 											echo '<input type="text" id="themeoption-footer_developer" class="form-control" name="footer_developer" value="'.$footer_developer.'">';
-											echo '<label class="control-label" for="themeoption-footer_developer">Developer Link</label>';
-											echo '<input type="text" id="themeoption-footer_developer" class="form-control" name="footer_developer" value="'.$footer_developer_link.'">';
+											echo '<label class="control-label" for="themeoption-footer_developer_link">Developer Link</label>';
+											echo '<input type="text" id="themeoption-footer_developer_link" class="form-control" name="footer_developer_link" value="'.$footer_developer_link.'">';
 											echo '<label class="control-label" for="themeoption-footer_copyright">Copyright</label>';
 											echo '<input type="text" id="themeoption-footer_copyright" class="form-control" name="footer_copyright" value="'.$footer_copyright.'">';
 										echo '</div>';
@@ -142,7 +142,7 @@ $urlManager = Yii::$app->urlManager;
 							<div id="aboutPage" class="panel-collapse collapse">
 								<div class="panel-body">
 									<?php 
-										$about_page_title = $homePageOptions['home_page_title']['value'];
+										$about_page_title = $aboutPageOptions['about_page_title']['value'];
 										$about_page_content = $aboutPageOptions['about_page_content']['value'];
 										
 										echo '<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">';

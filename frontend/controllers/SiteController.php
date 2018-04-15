@@ -94,7 +94,16 @@ class SiteController extends Controller
      */
     public function actionSchedule()
     {
-        return $this->render('schedule');
+        $searchModel = new NewsEventSearch();
+        $searchModel->type = NewsEvent::TYPE_EVENT;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->setSort(['defaultOrder'=>'news_event_date DESC']);
+        $dataProvider->pagination->pageSize = 4;
+		
+        return $this->render('schedule', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

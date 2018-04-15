@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="block-1-shadow">
             <h2 class="clr-6">Register</h2>
             <?php $form = ActiveForm::begin(['id' => 'form']); ?>
-                <?= $form->field($model, 'username', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textInput(['autofocus' => true]) ?>
+				<input name="SignupForm[username]" style="display:none">
+                <?= $form->field($model, 'username', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textInput(['autocomplete' => 'off']) ?>
                   <strong class="clear"></strong>
                 <?= $form->field($model, 'name', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textInput() ?>
                   <strong class="clear"></strong>
@@ -36,11 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
                   <strong class="clear"></strong>
                 <?= $form->field($model, 'email', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}']) ?>
                   <strong class="clear"></strong>
+				<input name="SignupForm[phone]" type="text" style="display:none">
                 <?= $form->field($model, 'phone', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textInput() ?>
                   <strong class="clear"></strong>
+				<input name="SignupForm[password]" type="password" style="display:none">
                 <?= $form->field($model, 'password', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->passwordInput() ?>
                   <strong class="clear"></strong>
-				<?= $form->field($model, 'captcha', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->widget(\yii\captcha\Captcha::classname(), []) ?>
+				<?= $form->field($model, 'captcha', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->widget(\yii\captcha\Captcha::classname(), ['imageOptions' => ['style' => 'height: 27px']]) ?>
                   <strong class="clear"></strong>
                 <div class="btns pad-2">
                     <?= Html::submitButton('Register', ['class' => 'link-2', 'id' => 'signup-submit-btn', 'name' => 'signup-button']) ?>

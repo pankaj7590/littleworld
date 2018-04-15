@@ -188,7 +188,7 @@ class SettingController extends Controller
 				$home_page_title_model->save();
 			}
 			$home_page_content = $sent_options['home_page_content'];
-			$home_page_content = Setting::findOne(['name' => 'home_page_content']);
+			$home_page_content_model = Setting::findOne(['name' => 'home_page_content']);
 			if($home_page_content_model){
 				if(!$home_page_content_model->default_value){
 					$home_page_content_model->default_value = $home_page_content;
