@@ -59,6 +59,7 @@ class ContactForm extends Model
 			$model->feedback_type = Contact::TYPE_CONTACT;
 			$model->name = $this->name;
 			$model->email = $this->email;
+			$model->message = $this->body;
 			if(!$model->save()){
 				throw new ServerErrorHttpException('Contact not saved. Please try again.');
 			}
