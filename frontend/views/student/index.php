@@ -7,7 +7,7 @@ $baseUrl = $urlManager->baseUrl;
       <div class="grid_4 bot-1">
         <h2 class="top-6 p2">My <?= (count($dataProvider->getModels()) == 1?'Child':'Children')?></h2>
 		<?php foreach($dataProvider->getModels() as $model){?>
-			<img src="<?= \common\components\MediaHelper::getImageUrl(($data->photoPicture?$data->photoPicture->file_name:""))?>" alt="" class="img-border img-indent">
+			<img src="<?= \common\components\MediaHelper::getImageUrl(($model->photoPicture?$model->photoPicture->file_name:""))?>" alt="" class="img-border img-indent" style="width:100px;">
 			<p class="text-1 p3"><?= $model->name;?></p>
 			<p>Division: <?= ($model->currentDivision?$model->currentDivision->division->name:'NA');?></p>
 			<p>Date Of Birth: <?= ($model->dob?$model->dob:'NA');?></p>

@@ -129,14 +129,15 @@ $baseUrl = $urlManager->baseUrl;
 				  <ul class="menu">
 					<li class="current"><a href="<?= $urlManager->createAbsoluteUrl(['site/index']);?>" class="clr-1">Home</a></li>
 					<li><a href="<?= $urlManager->createAbsoluteUrl(['site/about']);?>" class="clr-2">About</a></li>
-					<li><a href="<?= $urlManager->createAbsoluteUrl(['site/schedule']);?>" class="clr-3">Schedule</a></li>
 					<li><a href="<?= $urlManager->createAbsoluteUrl(['site/gallery']);?>" class="clr-4">Gallery</a></li>
+					<li><a href="<?= $urlManager->createAbsoluteUrl(['site/admission']);?>" class="clr-3">Admission</a></li>
 					<li><a href="<?= $urlManager->createAbsoluteUrl(['site/contact']);?>" class="clr-5">Contact</a></li>
 					<?php if(Yii::$app->user->isGuest){?>
 						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/login']);?>" class="clr-2">Login</a></li>
 						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/signup']);?>" class="clr-4">Register</a></li>
 					<?php }else{?>
 						<li><a href="<?= $urlManager->createAbsoluteUrl(['student/index']);?>" class="clr-2">My Child</a></li>
+						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/profile']);?>" class="clr-2">Profile</a></li>
 						<li><a href="<?= $urlManager->createAbsoluteUrl(['site/logout']);?>" data-method="post" class="clr-4">Logout</a></li>
 					<?php }?>
 				  </ul>

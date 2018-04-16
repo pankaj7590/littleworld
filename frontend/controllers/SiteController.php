@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
+use yii\web\ServerErrorHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -15,6 +16,10 @@ use frontend\models\ContactForm;
 use common\models\UserSearch;
 use common\models\NewsEvent;
 use common\models\NewsEventSearch;
+use common\models\Admission;
+use common\models\Student;
+use common\models\Guardian;
+use common\models\StudentGuardian;
 
 /**
  * Site controller
@@ -29,7 +34,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'admission', 'profile'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -37,7 +42,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'admission', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -256,5 +261,98 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+	
+	public function actionAdmission(){
+		$model = new Admission();
+		$model->detachBehavior('blameable');
+        $studentModel = new Student();
+		$studentModel->detachBehavior('blameable');
+		$guardianModel = $this->findGuardian(Yii::$app->user->id);
+		$guardianModel->detachBehavior('blameable');
+		$transaction = Yii::$app->db->beginTransaction();
+		try{
+			if($studentModel->load(Yii::$app->request->post())){
+				if($studentModel->save()){
+					if($guardianModel->load(Yii::$app->request->post())){
+						if($guardianModel->create_new){
+							$guardianModel = new Guardian();
+							$guardianModel->load(Yii::$app->request->post());
+							$guardianModel->generateAuthKey();
+							if($guardianModel->password){
+								$guardianModel->setPassword($guardianModel->password);
+							}
+							$guardianModel->generateAuthKey();
+							$guardianModel->detachBehavior('blameable');
+						}
+						if($guardianModel->save()){
+							$studentGuardian = new StudentGuardian();
+							$studentGuardian->student_id = $studentModel->id;
+							$studentGuardian->guardian_id = $guardianModel->id;
+							$studentGuardian->guardian_relation = $guardianModel->guardian_relation;
+							$studentGuardian->detachBehavior('blameable');
+							if(!$studentGuardian->save()){
+								Yii::$app->session->setFlash('error', json_encode($studentGuardian->getErrors()));
+								// throw new ServerErrorHttpException('Student guardian not saved. Please try again.');
+							}
+						}else{
+							Yii::$app->session->setFlash('error', json_encode($guardianModel->getErrors()));
+							// throw new ServerErrorHttpException('Guardian not saved. Please try again.');
+						}
+						$model->student_id = $studentModel->id;
+						$model->year = date('Y');
+						if($model->save()) {
+							$transaction->commit();
+							return $this->redirect(['student/index']);
+						}else{
+							Yii::$app->session->setFlash('error', json_encode($model->getErrors()));
+							// throw new ServerErrorHttpException('Guardian not saved. Please try again.');
+						}
+					}
+				}else{
+					Yii::$app->session->setFlash('error', json_encode($studentModel->getErrors()));
+					// throw new ServerErrorHttpException('Student not saved. Please try again.');
+				}
+				$studentModel->dob = date('Y-m-d', $studentModel->dob);
+				$guardianModel->dob = date('Y-m-d', $guardianModel->dob);
+			}
+		}catch(Exception $e){
+			$transaction->rollBack();
+			throw new ServerErrorHttpException('Something went wrong. Please try again.');
+		}
+
+        return $this->render('admission', [
+            'model' => $model,
+            'studentModel' => $studentModel,
+            'guardianModel' => $guardianModel,
+        ]);
+	}
+	
+	public function actionProfile(){
+		$guardianModel = $this->findGuardian(Yii::$app->user->id);
+		$guardianModel->detachBehavior('blameable');
+					
+		if($guardianModel->load(Yii::$app->request->post()) && $guardianModel->save()){
+			return $this->redirect(['profile']);
+		}
+		return $this->render('profile',[
+            'model' => $guardianModel,
+        ]);
+	}
+
+    /**
+     * Finds the Guardian model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Admission the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findGuardian($id)
+    {
+        if (($model = Guardian::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested guardian record does not exist.');
     }
 }

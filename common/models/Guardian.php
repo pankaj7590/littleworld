@@ -39,6 +39,7 @@ use common\components\MediaUploader;
  */
 class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
 {
+	public $create_new = false;
 	public $guardian_relation;
 	public $student_id;
 	public $profilePictureFile, $password;
@@ -92,7 +93,7 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-			[['dob'], 'safe'],
+			[['dob', 'create_new'], 'safe'],
         ];
     }
 	

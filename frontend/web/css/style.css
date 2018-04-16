@@ -266,7 +266,7 @@ ul.menu li {
 	margin:0px 35px 0px 0px;
 }
 ul.menu li a {
-	font-size:30px;
+	font-size:25px;
 	line-height:50px;
 	font-family: 'Cabin Sketch', cursive;
 	text-transform:uppercase;
@@ -413,6 +413,19 @@ dl dd a:hover {
     float: left;
     box-shadow: 0 0 3px #c1c1c1;
 }
+#form select {
+    border: #e0e0e1 1px solid;
+    background: #fff;
+    font-size: 14px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    color: #000;
+    padding: 3px 10px 5px 10px;
+    outline: medium none;
+    width: 247px;
+    height: 27px;
+    float: left;
+    box-shadow: 0 0 3px #c1c1c1;
+}
 #form label {
 	position:relative;
 	display: block;
@@ -440,6 +453,11 @@ dl dd a:hover {
     box-shadow: none;
     width: 20px;
 }
+#form input[type=checkbox], #form input[type=file]{
+	border: none;
+    box-shadow: none;
+	background:none;
+}
 #login-submit-btn, #signup-submit-btn, #contact-submit-btn, #contact-reset-btn{
     background: no-repeat;
     border: none;
@@ -451,6 +469,11 @@ dl dd a:hover {
     color: #3c763d;
     background-color: #dff0d8;
     border-color: #d6e9c6;
+}
+.alert-danger {
+    color: #76403c;
+    background-color: #f0d9d8;
+    border-color: #76403c;
 }
 .alert {
     padding: 15px;
