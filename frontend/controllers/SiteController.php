@@ -265,6 +265,7 @@ class SiteController extends Controller
 	
 	public function actionAdmission(){
 		$model = new Admission();
+		$model->status = Admission::STATUS_REQUESTED;
 		$model->detachBehavior('blameable');
         $studentModel = new Student();
 		$studentModel->detachBehavior('blameable');

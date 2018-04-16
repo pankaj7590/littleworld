@@ -32,7 +32,7 @@ use yii\web\View;
 		</label>
 	</div>
 	<strong class="clear"></strong>
-    <?= $form->field($model, 'dob', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textInput(['type' => 'date', 'max' => date('Y-m-d')]); ?>
+    <?= $form->field($model, 'dob', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textInput(['type' => 'date', 'max' => date('Y-m-d'), 'value' => date('Y-m-d', strtotime($model->dob))]); ?>
 	<strong class="clear"></strong>
     <?= $form->field($model, 'create_new')->checkbox(['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}']); ?>
 	<strong class="clear"></strong>

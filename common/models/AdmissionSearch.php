@@ -41,7 +41,7 @@ class AdmissionSearch extends Admission
      */
     public function search($params)
     {
-        $query = Admission::find();
+        $query = Admission::find()->orderBy('updated_at desc');
 
         // add conditions that should always apply here
 

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\Admission;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\AdmissionSearch */
@@ -33,6 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'is_paid',
 				'value' => function($data){
 					return ($data->is_paid?'Yes':'No');
+				},
+			],
+            [
+				'attribute' => 'status',
+				'filter' => Admission::$statuses,
+				'value' => function($data){
+					return ($data->status?Admission::$statuses[$data->status]:null);
 				},
 			],
 

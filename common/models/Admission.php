@@ -26,6 +26,18 @@ use yii\behaviors\BlameableBehavior;
  */
 class Admission extends \yii\db\ActiveRecord
 {
+	const STATUS_REQUESTED = 1;
+	const STATUS_REJECTED = 3;
+	const STATUS_CANCELLED = 5;
+	const STATUS_ACCEPTED = 10;
+	
+	public static $statuses = [
+		self::STATUS_REQUESTED => 'Requested',
+		self::STATUS_REJECTED => 'Rejected',
+		self::STATUS_CANCELLED => 'Cancelled',
+		self::STATUS_ACCEPTED => 'Accepted',
+	];
+	
     /**
      * @inheritdoc
      */
