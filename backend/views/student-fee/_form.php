@@ -12,25 +12,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'student_id')->textInput() ?>
-
-    <?= $form->field($model, 'fee_id')->textInput() ?>
-
-    <?= $form->field($model, 'type')->textInput() ?>
-
     <?= $form->field($model, 'amount')->textInput() ?>
-
-    <?= $form->field($model, 'is_paid')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+	
+    <?= $form->field($model, 'is_paid')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

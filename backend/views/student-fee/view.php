@@ -6,13 +6,13 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\StudentFee */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Student Fees', 'url' => ['index']];
+$this->title = $model->amount;
+$this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['student/index']];
+$this->params['breadcrumbs'][] = ['label' => $model->student->name, 'url' => ['student/view', 'id' => $model->student->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Fees', 'url' => ['index', 'id' => $model->student->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-fee-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,17 +28,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'student_id',
-            'fee_id',
-            'type',
             'amount',
-            'is_paid',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+			[
+				'attribute' => 'is_paid',
+				'value' => function($data){
+					return ($data->is_paid?'Yes':'No');
+				},
+			],
+			[
+				'attribute' => 'created_by',
+				'value' => function($data){
+					return ($data->createdBy?$data->createdBy->name:null);
+				},
+			],
+			[
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:null);
+				},
+			],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

@@ -40,10 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
 				'class' => 'yii\grid\ActionColumn',
-				'template' => '{view} {update} {delete} {guardians}',
+				'template' => '{view} {update} {delete} {guardians} {fees}',
 				'buttons' => [
 					'guardians' => function($key, $model, $url){
 						return Html::a('<span class="glyphicon glyphicon-user"></span>', ['guardian/index', 'id' => $model->id]);
+					},
+					'fees' => function($key, $model, $url){
+						return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', ['student-fee/index', 'id' => $model->id]);
 					},
 				],
 			],

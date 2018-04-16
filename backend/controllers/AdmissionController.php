@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Student;
+use common\models\StudentFee;
 use common\models\StudentGuardian;
 use common\models\Guardian;
 use common\models\AdmissionCheckForm;
@@ -133,6 +134,13 @@ class AdmissionController extends Controller
 						}
 						$model->student_id = $studentModel->id;
 						if ($model->load(Yii::$app->request->post()) && $model->save()) {
+							$studentFee = new StudentFee();
+							$studentFee->amount = $model->fee;
+							$studentFee->student_id = $studentModel->id;
+							$studentFee->is_paid = $model->is_paid;
+							if(!$studentFee->save()){
+								Yii::$app->session->setFlash('error', json_encode($studentFee->getErrors()));
+							}
 							$transaction->commit();
 							return $this->redirect(['view', 'id' => $model->id]);
 						}

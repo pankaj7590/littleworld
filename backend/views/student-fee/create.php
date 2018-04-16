@@ -6,16 +6,17 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\StudentFee */
 
-$this->title = 'Create Student Fee';
-$this->params['breadcrumbs'][] = ['label' => 'Student Fees', 'url' => ['index']];
+$this->title = 'Add Fee';
+$this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['student/index']];
+$this->params['breadcrumbs'][] = ['label' => $studentModel->name, 'url' => ['student/view', 'id' => $studentModel->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Fees', 'url' => ['index', 'id' => $studentModel->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-fee-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+		'studentModel' => $studentModel,
     ]) ?>
 
 </div>

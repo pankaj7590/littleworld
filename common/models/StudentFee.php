@@ -55,7 +55,7 @@ class StudentFee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['student_id', 'fee_id'], 'required'],
+            [['student_id'], 'required'],
             [['student_id', 'fee_id', 'type', 'is_paid', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['amount'], 'number'],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],

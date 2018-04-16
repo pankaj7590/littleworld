@@ -7,16 +7,14 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\StudentFeeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Student Fees';
+$this->title = 'Fees';
+$this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['student/index']];
+$this->params['breadcrumbs'][] = ['label' => $studentModel->name, 'url' => ['student/view', 'id' => $studentModel->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-fee-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Student Fee', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Add Fee', ['create', 'id' => $studentModel->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,17 +23,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'student_id',
-            'fee_id',
-            'type',
             'amount',
-            //'is_paid',
-            //'status',
-            //'created_by',
-            //'updated_by',
-            //'created_at',
-            //'updated_at',
+			[
+				'attribute' => 'created_by',
+				'value' => function($data){
+					return ($data->createdBy?$data->createdBy->name:null);
+				},
+			],
+			[
+				'attribute' => 'updated_by',
+				'value' => function($data){
+					return ($data->updatedBy?$data->updatedBy->name:null);
+				},
+			],
+            'created_at:datetime',
+            'updated_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\Student;
 use common\models\StudentFee;
 use common\models\StudentFeeSearch;
 use yii\web\Controller;
@@ -43,12 +44,16 @@ class StudentFeeController extends Controller
      * Lists all StudentFee models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+		$studentModel = $this->findStudent($id);
+		
         $searchModel = new StudentFeeSearch();
+        $searchModel->student_id = $studentModel->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'studentModel' => $studentModel,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -72,15 +77,19 @@ class StudentFeeController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
+		$studentModel = $this->findStudent($id);
+		
         $model = new StudentFee();
+		$model->student_id = $studentModel->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
+            'studentModel' => $studentModel,
             'model' => $model,
         ]);
     }
@@ -132,6 +141,22 @@ class StudentFeeController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('The student fee does not exist.');
+    }
+
+    /**
+     * Finds the StudentFee model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return StudentFee the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findStudent($id)
+    {
+        if (($model = Student::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The student does not exist.');
     }
 }
