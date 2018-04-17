@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
+use common\models\Exam;
+use common\models\ExamStudentSubject;
 use common\models\Student;
 use common\models\StudentSearch;
 use yii\web\Controller;
@@ -45,11 +47,29 @@ class StudentController extends Controller
      */
     public function actionIndex()
     {
+		$examModels = Exam::find()->orderBy('year desc')->all();
+		
         $searchModel = new StudentSearch();
 		$searchModel->guardian_id = Yii::$app->user->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		
+		$student_ids = [];
+		foreach($dataProvider->getModels() as $student){
+			$student_ids[] = $student->id;
+		}
 
+		$examStudentSubjectModels = ExamStudentSubject::find()->where(['in', 'student_id', $student_ids])->all();
+		$examStudentSubjects = [];
+		foreach($examStudentSubjectModels as $examStudentSubject){
+			$examStudentSubjects[$examStudentSubject->exam_subject_id] = [
+				'exam' => $examStudentSubject->exam->name,
+				'marks' => $examStudentSubject,
+			];
+		}
+		
         return $this->render('index', [
+            'examModels' => $examModels,
+            'examStudentSubjects' => $examStudentSubjects,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

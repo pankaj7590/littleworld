@@ -127,6 +127,9 @@ class Exam extends \yii\db\ActiveRecord
      */
     public function afterFind()
     {	
+		if($this->scheduled_date < time()){
+			$this->updateAttributes(['status' => self::STATUS_ON_GOING]);
+		}
 		if($this->scheduled_date){
 			$this->scheduled_date = Yii::$app->formatter->asDatetime($this->scheduled_date);
 		}

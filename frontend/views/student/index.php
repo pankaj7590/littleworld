@@ -1,4 +1,6 @@
 <?php
+use common\models\Exam;
+
 $this->title = 'My '.(count($dataProvider->getModels()) == 1?'Child':'Children');
 $user = Yii::$app->user;
 $urlManager = Yii::$app->urlManager;
@@ -12,6 +14,7 @@ $baseUrl = $urlManager->baseUrl;
 			<p>Division: <?= ($model->currentDivision?$model->currentDivision->division->name:'NA');?></p>
 			<p>Date Of Birth: <?= ($model->dob?$model->dob:'NA');?></p>
 			<p>Address: <?= $model->address;?></p>
+			<div class="clear"></div>
 		<?php }?>
       </div>
       <div class="grid_8">
@@ -20,58 +23,42 @@ $baseUrl = $urlManager->baseUrl;
             <h2 class="clr-6 p6">Exam Schedule</h2>
             <table class="table">
               <tr>
-                <th>Monday</th>
-                <th>Wednesday</th>
-                <th>Friday</th>
-                <th class="last">Saturday</th>
+                <th>Year</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Scheduled Date</th>
+                <th>Status</th>
               </tr>
-              <tr>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-              </tr>
-              <tr>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-              </tr>
-              <tr>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-              </tr>
+			  <?php foreach($examModels as $exam){?>
+				  <tr>
+					<td><span class="clr-4"><?= $exam->year;?></span></td>
+					<td><span class="clr-4"><?= $exam->name;?></span></td>
+					<td><span class="clr-4"><?= ($exam->type?Exam::$types[$exam->type]:'-');?></span></td>
+					<td><span class="clr-4"><?= $exam->scheduled_date;?></span></td>
+					<td><span class="clr-4"><?= Exam::$statuses[$exam->status];?></span></td>
+				  </tr>
+			  <?php }?>
             </table>
-            <h2 class="clr-6 p6">Report Card</h2>
-            <table class="table">
-              <tr>
-                <th>Monday</th>
-                <th>Wednesday</th>
-                <th>Friday</th>
-                <th class="last">Saturday</th>
-              </tr>
-              <tr>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-                <td><span>11:00</span><span class="clr-4">Nam liber tempor</span><span>Peter Stanton</span></td>
-              </tr>
-              <tr>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-                <td><span>13:00</span><span class="clr-4">Lorem ipsum</span><span>Helen Perton</span></td>
-              </tr>
-              <tr>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-                <td><span>16:00</span><span class="clr-4">Dolor sit amet</span><span>Jesica Murray</span></td>
-              </tr>
-            </table>
+			<?php if($examStudentSubjects){?>
+				<h2 class="clr-6 p6">Report Card</h2>
+				<table class="table">
+				  <tr>
+					<th>Exam</th>
+					<?php foreach($examStudentSubjects as $examStudentSubject){?>
+						<th><?= $examStudentSubject->subject;?></th>
+					<?php }?>
+				  </tr>
+				  <?php foreach($examStudentSubjects as $examStudentSubject){?>
+					  <tr>
+						<td><span><?= $examStudentSubject['exam']?></span></td>
+						<?php foreach($examStudentSubject['marks'] as $marks){?>
+							<td><span><?= $marks->secured_marks.'/'.$marks->out_of_marks?></span><span class="clr-4"><?= $marks->grade.'-'.$marks->remarks?></span></td>
+						<?php }?>
+					  </tr>
+				  <?php }?>
+				</table>
+			<?php }?>
           </div>
         </div>
-					<?= $this->render('../layouts/_footer.php')?>
-      </div>
+	<?= $this->render('../layouts/_footer.php')?>
+	</div>
