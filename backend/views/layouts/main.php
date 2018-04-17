@@ -198,7 +198,6 @@ if (Yii::$app->user->isGuest) {
 										'encodeLabels' => false,
 										'options' => ['class' => 'nav nav-second-level'],
 										'items' => [
-											['label' => 'New Media', 'url' => ['/media/create']],
 											['label' => 'Manage Media', 'url' => ['/media/index']],
 										],
 									]) ?>

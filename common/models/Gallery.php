@@ -65,7 +65,7 @@ class Gallery extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'string'],
-            [['galleryPictures'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png'],
+            [['galleryPictures'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png', 'maxFiles'=>0],
             [['type', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
@@ -139,4 +139,8 @@ class Gallery extends \yii\db\ActiveRecord
     {
         return $this->hasMany(GalleryMedia::className(), ['gallery_id' => 'id']);
     }
+	
+	public function getFirstImage(){
+		return $this->hasOne(GalleryMedia::className(), ['gallery_id' => 'id']);
+	}
 }

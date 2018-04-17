@@ -77,20 +77,6 @@ $baseUrl = $urlManager->baseUrl;
 				</h1>
 				<nav>
 				  <div id="slide">
-					<?php if(Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'gallery'){?>
-						<div class="gallery">
-						  <ul class="items">
-							<li><img src="<?= $baseUrl?>/images/gallery-big-1.jpg" alt=""></li>
-							<li><img src="<?= $baseUrl?>/images/gallery-big-2.jpg" alt=""></li>
-							<li><img src="<?= $baseUrl?>/images/gallery-big-3.jpg" alt=""></li>
-							<li><img src="<?= $baseUrl?>/images/gallery-big-4.jpg" alt=""></li>
-							<li><img src="<?= $baseUrl?>/images/gallery-big-5.jpg" alt=""></li>
-							<li><img src="<?= $baseUrl?>/images/gallery-big-6.jpg" alt=""></li>
-							<li><img src="<?= $baseUrl?>/images/gallery-big-7.jpg" alt=""></li>
-							<li><img src="<?= $baseUrl?>/images/gallery-big-8.jpg" alt=""></li>
-						  </ul>
-						</div>
-					<?php }else{?>
 						<?php
 							$homePageOptionModels = Setting::find()->where(['setting_group' => Setting::GROUP_HOME_PAGE])->all();
 							$homePageOptions = [];
@@ -124,7 +110,6 @@ $baseUrl = $urlManager->baseUrl;
 								echo '</div>';
 							}
 						?>
-					<?php }?>
 					<a href="#" class="prev"></a><a href="#" class="next"></a> </div>
 				  <ul class="menu">
 					<li class="current"><a href="<?= $urlManager->createAbsoluteUrl(['site/index']);?>" class="clr-1">Home</a></li>

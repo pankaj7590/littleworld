@@ -34,19 +34,11 @@ $home_page_content = $homePageOptions['home_page_content']['value'];
 					<div class="block-1">
 					  <div class="block-1-shadow">
 						<h2 class="clr-6 p4">Our Gallery</h2>
-						<div class="box-1"> <a href="#" class="img-border"><img src="<?= $baseUrl?>/images/img1.jpg" alt=""></a>
-						  <p class="text-2">Jennifer, 10 years</p>
-						</div>
-						<div class="box-1 last"> <a href="#" class="img-border"><img src="<?= $baseUrl?>/images/img2.jpg" alt=""></a>
-						  <p class="text-2">Martin, 13 years</p>
-						</div>
-						<div class="clear p5"></div>
-						<div class="box-1"> <a href="#" class="img-border"><img src="<?= $baseUrl?>/images/img3.jpg" alt=""></a>
-						  <p class="text-2">Sebastian, 14 years</p>
-						</div>
-						<div class="box-1 last"> <a href="#" class="img-border"><img src="<?= $baseUrl?>/images/img4.jpg" alt=""></a>
-						  <p class="text-2">Fiona, 8 years</p>
-						</div>
+						<?php foreach($galleries as $key => $gallery){?>
+							<div class="box-1 <?= ($key%2==0?'':'last')?>"> <a href="<?= $urlManager->createAbsoluteUrl(['site/gallery', 'id' => $gallery->id]);?>" class="img-border"><img src="<?= \common\components\MediaHelper::getImageUrl(($gallery->firstImage?$gallery->firstImage->media->file_name:""))?>" alt=""></a>
+							  <p class="text-2"><?= $gallery->name;?></p>
+							</div>
+						<?php }?>
 						<div class="clear"></div>
 						<div class="pad-2"> <a href="<?= $urlManager->createAbsoluteUrl(['site/gallery']);?>" class="link-2">Full Gallery</a> </div>
 					  </div>

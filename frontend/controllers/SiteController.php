@@ -5,6 +5,7 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\ServerErrorHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -20,6 +21,8 @@ use common\models\Admission;
 use common\models\Student;
 use common\models\Guardian;
 use common\models\StudentGuardian;
+use common\models\Gallery;
+use common\models\GallerySearch;
 
 /**
  * Site controller
@@ -85,8 +88,11 @@ class SiteController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->setSort(['defaultOrder'=>'news_event_date DESC']);
         $dataProvider->pagination->pageSize = 2;
+		
+		$galleries = Gallery::find()->limit('4')->orderBy('updated_at desc')->all();
 
         return $this->render('index', [
+            'galleries' => $galleries,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -116,9 +122,28 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionGallery()
+    public function actionGallery($id=null)
     {
-        return $this->render('gallery');
+		$searchModel = new GallerySearch();
+		$searchModel->status = Gallery::STATUS_SHOW;
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->setSort(['attributes' => ['updated_at' => SORT_DESC]]);
+		
+		$selected_gallery = null;
+		if($id){
+			$selected_gallery = Gallery::findOne($id);
+			if(!$selected_gallery){
+				throw new NotFoundHttpException('Gallery not found.');
+			}
+		}else{
+			$selected_gallery = Gallery::find()->orderBy('updated_at desc')->one();
+		}
+		
+        return $this->render('gallery', [
+            'selected_gallery' => $selected_gallery,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+		]);
     }
 
     /**
