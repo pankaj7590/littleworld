@@ -27,6 +27,10 @@ use common\components\MediaUploader;
  * @property integer $updated_at
  * @property string $password write-only password
 * @property string $phone
+* @property string $address
+* @property string $qualification
+* @property string $experience
+* @property int $dob
 * @property int $status
 * @property int $created_by
 * @property int $updated_by
@@ -130,6 +134,14 @@ class User extends ActiveRecord implements IdentityInterface
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
 			[['phone'], 'unique'],
+			[['address', 'qualification', 'experience', 'dob'], 'safe'],
+			
+            ['name', 'trim'],
+			['name', 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Name can only contain characters.'],
+			
+            ['phone', 'trim'],
+            ['phone', 'string', 'max' => 10],
+            ['phone', 'number'],
 		];
    }
 	
@@ -151,10 +163,24 @@ class User extends ActiveRecord implements IdentityInterface
 					}
 				}
 			}
+			if($this->dob){
+				$this->dob = strtotime($this->dob);
+			}
             return true;
         } else {
             return false;
         }
+    }
+	
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {	
+		if($this->dob){
+			$this->dob = Yii::$app->formatter->asDate($this->dob);
+		}
+        return parent::afterFind();
     }
 
     /**
@@ -164,6 +190,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'profilePictureFile' => 'Profile Picture',
+            'dob' => 'Date Of Birth',
         ];
     }
 

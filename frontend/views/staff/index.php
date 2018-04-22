@@ -11,30 +11,19 @@ $this->params['selected_gallery'] = $selected_gallery;
       <div class="grid_4 bot-1">
         <h2 class="top-6 p2">Our Archive</h2>
         <ul class="list-1">
-			<?php foreach($dataProvider->getModels() as $gallery){?>
-				<li><a href="<?= $urlManager->createAbsoluteUrl(['site/gallery', 'id' => $gallery->id]);?>"><?= $gallery->name;?></a></li>
+			<?php foreach($dataProvider->getModels() as $event){?>
+				<li><a href="<?= $urlManager->createAbsoluteUrl(['event/view', 'id' => $event->id]);?>"><?= $event->title;?></a></li>
 			<?php }?>
         </ul>
       </div>
       <div class="grid_8">
         <div class="block-1 top-5">
           <div class="block-1-shadow">
-            <h2 class="clr-6 p4">Our Gallery</h2>
-            <div class="pag">
-              <div class="img-pags">
-                <ul>
-					<?php foreach($selected_gallery->galleryMedia as $key => $galleryMedia){?>
-						<div class="mb25 box-1 <?= ($key%2==0?'':'last')?>"> 
-							<a data-fancybox="gallery" href="<?= \common\components\MediaHelper::getImageUrl(($galleryMedia?$galleryMedia->media->file_name:""))?>" class="img-border"><img src="<?= \common\components\MediaHelper::getImageUrl(($galleryMedia?$galleryMedia->media->file_name:""))?>" alt="" style="width:250px"></a>
-						</div>
-					<?php }?>
-                </ul>
-              </div>
-            </div>
-            <div class="clear"></div>
+            <h2 class="clr-6 p6"><?= ($selected_event->title)?></h2>
+            <p class="clr-6"><?= ($selected_event->content)?></p>
           </div>
         </div>
-					<?= $this->render('../layouts/_footer.php')?>
+		<?= $this->render('../layouts/_footer.php')?>
       </div>
 <?php
 /* $this->registerJs("

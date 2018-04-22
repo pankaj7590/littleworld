@@ -37,6 +37,9 @@ $baseUrl = $urlManager->baseUrl;
 		}?>
 		<link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:400,700' rel='stylesheet' type='text/css'>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+		
 		<!--[if lt IE 9]>
 		<script src="js/html5.js"></script>
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
@@ -185,6 +188,7 @@ $baseUrl = $urlManager->baseUrl;
 				});
 			", View::POS_LOAD, "init-slider");
 		?>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
 	</body>
 </html>
 <?php $this->endPage() ?>

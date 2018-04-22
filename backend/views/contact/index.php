@@ -35,7 +35,6 @@ $type = Contact::$types[$searchModel->feedback_type];
             ['class' => 'yii\grid\SerialColumn'],
 
             'name',
-            'surname',
             'email:email',
             'message:ntext',
             'updated_at:datetime',

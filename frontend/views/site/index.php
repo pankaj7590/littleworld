@@ -19,13 +19,15 @@ $home_page_content = $homePageOptions['home_page_content']['value'];
 					<div class="art"></div>
 					<h2 class="top-1 p2">Events</h2>
 					<?php foreach($dataProvider->getModels() as $model){?>
-						<img src="<?= \common\components\MediaHelper::getImageUrl(($data->photoPicture?$data->photoPicture->file_name:""))?>" alt="" class="img-border img-indent">
-						<div class="clear"></div>
-						<p class="text-1 p3"><?= date('M d').' - "'.$model->title.'"';?></p>
-						<p><?= $model->content;?></p>
-						<div class="clear"></div>
+						<a href="<?= $urlManager->createAbsoluteUrl(['event/view', 'id' => $model->id])?>" class="link-1 top-3">
+							<img src="<?= \common\components\MediaHelper::getImageUrl(($model->photoPicture?$model->photoPicture->file_name:""))?>" alt="" class="img-border img-indent" style="width:235px;">
+							<div class="clear"></div>
+							<p class="text-1 p3"><?= date('M d').' - "'.$model->title.'"';?></p>
+							<p><?= $model->content;?></p>
+							<div class="clear"></div>
+						</a> 
 					<?php }?>
-					<a href="<?= $urlManager->createAbsoluteUrl(['news-event/event-index'])?>" class="link-1 top-3">All Events</a> </div>
+					</div>
 				  <div class="grid_8">
 					<div class="pad-1">
 					  <h2 class="p2"><?= ($home_page_title?$home_page_title:'Welcome to Little World')?></h2>

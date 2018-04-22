@@ -94,6 +94,13 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
 			[['dob', 'create_new'], 'safe'],
+			
+            ['name', 'trim'],
+			['name', 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Name can only contain characters.'],
+			
+            ['phone', 'trim'],
+            ['phone', 'string', 'max' => 10],
+            ['phone', 'number'],
         ];
     }
 	

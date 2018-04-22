@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<input name="SignupForm[password]" type="password" style="display:none">
                 <?= $form->field($model, 'password', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->passwordInput() ?>
                   <strong class="clear"></strong>
-				<?= $form->field($model, 'captcha', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->widget(\yii\captcha\Captcha::classname(), ['imageOptions' => ['style' => 'height: 27px']]) ?>
+				<?= $form->field($model, 'captcha', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->widget(\yii\captcha\Captcha::classname()) ?>
                   <strong class="clear"></strong>
                 <div class="btns pad-2">
                     <?= Html::submitButton('Register', ['class' => 'link-2', 'id' => 'signup-submit-btn', 'name' => 'signup-button']) ?>

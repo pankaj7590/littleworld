@@ -56,13 +56,6 @@ $contact_email = $contactPageOptions['contact_email']['value'];
 								<strong class="clear"></strong>
 								<?= $form->field($model, 'address', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textarea(['rows' => 6]) ?>
 								<strong class="clear"></strong>
-								<div class="form-group">
-									<label class="control-label">
-										<strong><label class="control-label" for="copy-student-address"></label></strong>
-										<button type="button" id="copy-student-address" class="btn btn-default btn-xs">Copy student address</button>
-									</label>
-								</div>
-								<strong class="clear"></strong>
 								<?= $form->field($model, 'dob', ['template' => '{beginLabel}<strong>{label}</strong>{input}{endLabel}{error}'])->textInput(['type' => 'date', 'max' => date('Y-m-d'), 'value' => date('Y-m-d', strtotime($model->dob))]); ?>
 								<strong class="clear"></strong>
 								<div class="btns pad-2">

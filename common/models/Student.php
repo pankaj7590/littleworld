@@ -71,6 +71,9 @@ class Student extends \yii\db\ActiveRecord
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
 			[['dob'], 'safe'],
+			
+            ['name', 'trim'],
+			['name', 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Name can only contain characters.'],
         ];
     }
 	

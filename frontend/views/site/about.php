@@ -21,12 +21,14 @@ $about_page_offer_content = $aboutPageOptions['about_page_offer_content']['value
       <div class="grid_4 bot-1">
         <h2 class="top-6 p2">Staff</h2>
 		<?php foreach($dataProvider->getModels() as $model){?>
-			<img src="<?= \common\components\MediaHelper::getImageUrl(($data->profilePicture?$data->profilePicture->file_name:""))?>" alt="" class="img-border img-indent">
-			<div class="clear"></div>
-			<p class="text-1 p3"><?= $model->name;?></p>
-			<p>Email: <?= ($model->email);?></p>
-			<p>Phone: <?= ($model->phone);?></p>
-			<div class="clear"></div>
+			<a href="<?= $urlManager->createAbsoluteUrl(['staff/view', 'id' => $model->id])?>" class="top-3">
+				<img src="<?= \common\components\MediaHelper::getImageUrl(($model->profilePicture?$model->profilePicture->file_name:""))?>" alt="" class="img-border img-indent">
+				<div class="clear"></div>
+				<p class="text-1 p3"><?= $model->name;?></p>
+				<p>Email: <?= ($model->email);?></p>
+				<p>Phone: <?= ($model->phone);?></p>
+				<div class="clear"></div>
+			</a> 
 		<?php }?>
       </div>
       <div class="grid_8">

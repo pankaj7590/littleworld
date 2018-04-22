@@ -14,8 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
