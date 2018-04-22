@@ -67,7 +67,7 @@ class Payment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['guardian_id', 'student_id', 'fee_id', 'amount'], 'required'],
+            [['guardian_id', 'student_id', 'amount'], 'required'],
             [['guardian_id', 'student_id', 'fee_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['amount'], 'number'],
             [['email', 'mobile'], 'string', 'max' => 255],

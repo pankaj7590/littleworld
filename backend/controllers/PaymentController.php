@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\StudentGuardian;
+use common\models\Guardian;
 use common\models\Payment;
 use common\models\PaymentSearch;
 use yii\web\Controller;
@@ -75,13 +77,20 @@ class PaymentController extends Controller
     public function actionCreate()
     {
         $model = new Payment();
+		
+		$guardians = Guardian::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())){
+			$model->email = $model->guardian->email;
+			$model->mobile = $model->guardian->phone;
+			if($model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
         }
 
         return $this->render('create', [
             'model' => $model,
+            'guardians' => $guardians,
         ]);
     }
 
@@ -95,13 +104,20 @@ class PaymentController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		
+		$guardians = Guardian::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())){
+			$model->email = $model->guardian->email;
+			$model->mobile = $model->guardian->phone;
+			if($model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
         }
 
         return $this->render('update', [
             'model' => $model,
+            'guardians' => $guardians,
         ]);
     }
 
@@ -118,6 +134,23 @@ class PaymentController extends Controller
 
         return $this->redirect(['index']);
     }
+	
+	public function actionGetStudents(){
+		$id = Yii::$app->request->post('id');
+		if(!$id){
+			return false;
+		}
+		$guardianModel = Guardian::findOne($id);
+		if(!$guardianModel){
+			return false;
+		}
+		$students = StudentGuardian::find()->where(['guardian_id' => $guardianModel->id])->all();
+		$studentsArr = [];
+		foreach($students as $student){
+			$studentsArr[$student->student_id] = $student->student->name;
+		}
+		return json_encode($studentsArr);
+	}
 
     /**
      * Finds the Payment model based on its primary key value.

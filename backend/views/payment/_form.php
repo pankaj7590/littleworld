@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\Payment;
 
@@ -13,15 +14,13 @@ use common\models\Payment;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'guardian_id')->textInput() ?>
+    <?= $form->field($model, 'guardian_id')->dropdownList(ArrayHelper::map($guardians, 'id', 'name'), ['prompt' => 'Select guardian to see students']) ?>
 
-    <?= $form->field($model, 'student_id')->textInput() ?>
-
-    <?= $form->field($model, 'fee_id')->textInput() ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
+	<?php if($model->isNewRecord){?>
+		<?= $form->field($model, 'student_id')->dropdownList([], ['prompt' => 'Select guardian to see students']) ?>
+	<?php }else{?>
+		<?= $form->field($model, 'student_id')->dropdownList(ArrayHelper::map($model->guardian->studentGuardians, 'student.id', 'student.name'), ['prompt' => 'Select guardian to see students']) ?>
+	<?php }?>
 
     <?= $form->field($model, 'amount')->textInput() ?>
 
@@ -34,3 +33,29 @@ use common\models\Payment;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php
+$this->registerJs("
+	$('#payment-guardian_id').on('change', function(){
+		var id = $(this).val();
+		if(typeof id != 'undefined'){
+			$.ajax({
+				type: 'post',
+				url: '".Yii::$app->urlManager->createAbsoluteUrl(['payment/get-students'])."',
+				data:{id:id},
+				success:function(data){
+					if(data){
+						var data = JSON.parse(data);
+						var options = '';
+						$.each(data, function(k,v){
+							options += '<option value='+k+'>'+v+'</option>'; 
+						});
+						$('#payment-student_id').html(options);
+					}else{
+						$('#payment-student_id').html('');
+					}
+				}
+			});
+		}
+	});
+");
+?>

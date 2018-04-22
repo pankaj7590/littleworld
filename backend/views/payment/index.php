@@ -34,12 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					return ($data->student?$data->student->name:NULL);
 				},
 			],
-			[
-				'attribute' => 'fee_id',
-				'value' => function($data){
-					return ($data->fee?$data->fee->amount:NULL);
-				},
-			],
+			'amount',
             'email:email',
 
             ['class' => 'yii\grid\ActionColumn'],

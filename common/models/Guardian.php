@@ -222,7 +222,7 @@ class Guardian extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getStudentGuardians()
     {
-        return $this->hasMany(StudentGuardian::className(), ['guardian_id' => 'id']);
+        return $this->hasMany(StudentGuardian::className(), ['guardian_id' => 'id'])->joinWith('student');
     }
 
     /**

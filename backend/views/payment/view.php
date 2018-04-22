@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Payment;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Payment */
 
-$this->title = $model->id;
+$this->title = ($model->guardian?$model->guardian->name:NULL);
 $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -38,20 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					return ($data->student?$data->student->name:NULL);
 				},
 			],
-			[
-				'attribute' => 'fee_id',
-				'value' => function($data){
-					return ($data->fee?$data->fee->amount:NULL);
-				},
-			],
             'email:email',
             'mobile',
             'amount',
-            'status',
             [
 				'attribute' => 'status',
 				'value' => function($data){
-					return ($data->status?Payment::$statues[$data->status]:NULL);
+					return ($data->status?Payment::$statuses[$data->status]:NULL);
 				},
 			],
             [
